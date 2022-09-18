@@ -13,6 +13,8 @@
 
     <bean class="org.fed333.ticket.booking.app.config.InitializeStorageWithPreparedDataBeanPostProcessor" p:storageSourceJson="${init.data.json.storage}"/>
 
+    <bean class="org.fed333.ticket.booking.app.config.HibernateConfig" />
+
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations" value="classpath:application.properties"/>
     </bean>
