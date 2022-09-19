@@ -19,9 +19,17 @@ public interface Ticket extends Identifiable<Long>{
 
     void setEventId(Long eventId);
 
+    Event getEvent();
+
+    void setEvent(Event event);
+
     Long getUserId();
 
     void setUserId(Long userId);
+
+    User getUser();
+
+    void setUser(User user);
 
     Category getCategory();
 

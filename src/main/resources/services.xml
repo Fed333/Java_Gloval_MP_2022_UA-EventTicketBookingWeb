@@ -47,6 +47,10 @@
         <property name="idGenerator" ref="idGenerator"/>
     </bean>
 
+    <bean id="hibernateTicketRepository"
+          class="org.fed333.ticket.booking.app.repository.impl.TicketRepositoryImpl">
+    </bean>
+
     <bean id="userRepository"
           class="org.fed333.ticket.booking.app.repository.impl.old.UserRepositoryImpl">
         <property name="idGenerator" ref="idGenerator"/>
