@@ -20,7 +20,7 @@
     </bean>
 
     <bean id="idGenerator"
-          class="org.fed333.ticket.booking.app.repository.impl.component.LongIdGenerator"
+          class="org.fed333.ticket.booking.app.repository.impl.old.component.LongIdGenerator"
           scope="prototype">
         <property name="currId" value="0"/>
     </bean>
@@ -34,18 +34,26 @@
           class="org.fed333.ticket.booking.app.service.component.SlicePaginator"/>
 
     <bean id="eventRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl">
+          class="org.fed333.ticket.booking.app.repository.impl.old.EventRepositoryImpl">
         <property name="idGenerator" ref="idGenerator"/>
     </bean>
 
+    <bean id="hibernateEventRepository"
+          class="org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl">
+    </bean>
+
     <bean id="ticketRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.TicketRepositoryImpl">
+          class="org.fed333.ticket.booking.app.repository.impl.old.TicketRepositoryImpl">
         <property name="idGenerator" ref="idGenerator"/>
     </bean>
 
     <bean id="userRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl">
+          class="org.fed333.ticket.booking.app.repository.impl.old.UserRepositoryImpl">
         <property name="idGenerator" ref="idGenerator"/>
+    </bean>
+
+    <bean id="hibernateUserRepository"
+          class="org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl">
     </bean>
 
     <bean id="userService"
@@ -77,7 +85,7 @@
     </bean>
 
     <bean id="storage"
-          class="org.fed333.ticket.booking.app.repository.impl.component.StorageData">
+          class="org.fed333.ticket.booking.app.repository.impl.old.component.StorageData">
         <property name="eventRepository" ref="eventRepository"/>
         <property name="userRepository" ref="userRepository"/>
         <property name="ticketRepository" ref="ticketRepository"/>

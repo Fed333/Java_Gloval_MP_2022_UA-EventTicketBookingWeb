@@ -12,9 +12,8 @@ import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.model.impl.EventImpl;
 import org.fed333.ticket.booking.app.model.impl.TicketImpl;
 import org.fed333.ticket.booking.app.model.impl.UserImpl;
-import org.fed333.ticket.booking.app.repository.impl.component.StorageData;
+import org.fed333.ticket.booking.app.repository.impl.old.component.StorageData;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.io.IOException;

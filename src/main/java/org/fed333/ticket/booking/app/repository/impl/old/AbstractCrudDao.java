@@ -1,4 +1,4 @@
-package org.fed333.ticket.booking.app.repository.impl;
+package org.fed333.ticket.booking.app.repository.impl.old;
 
 import org.fed333.ticket.booking.app.model.Identifiable;
 import org.fed333.ticket.booking.app.repository.CrudRepository;

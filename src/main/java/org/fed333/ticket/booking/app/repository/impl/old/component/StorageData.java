@@ -1,15 +1,12 @@
-package org.fed333.ticket.booking.app.repository.impl.component;
+package org.fed333.ticket.booking.app.repository.impl.old.component;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.fed333.ticket.booking.app.repository.EventRepository;
-import org.fed333.ticket.booking.app.repository.TicketRepository;
-import org.fed333.ticket.booking.app.repository.UserRepository;
-import org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl;
-import org.fed333.ticket.booking.app.repository.impl.TicketRepositoryImpl;
-import org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl;
+import org.fed333.ticket.booking.app.repository.impl.old.EventRepositoryImpl;
+import org.fed333.ticket.booking.app.repository.impl.old.TicketRepositoryImpl;
+import org.fed333.ticket.booking.app.repository.impl.old.UserRepositoryImpl;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 

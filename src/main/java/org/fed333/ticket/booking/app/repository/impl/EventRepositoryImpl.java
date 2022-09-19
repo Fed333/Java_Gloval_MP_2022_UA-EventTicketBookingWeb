@@ -1,45 +1,36 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.repository.impl.component.LongIdGenerator;
-import org.fed333.ticket.booking.app.utils.DateUtils;
+import org.fed333.ticket.booking.app.repository.EventRepository;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.fed333.ticket.booking.app.utils.DateUtils.extractDayOfYear;
-import static org.fed333.ticket.booking.app.utils.DateUtils.extractYear;
-
-public class EventRepositoryImpl extends AbstractCrudDao<Event,Long> implements EventRepository {
-
-    @Getter @Setter
-    private LongIdGenerator idGenerator;
-
-    @Override
-    protected Long nextId() {
-        return idGenerator.generateNextId();
-    }
-
+@Repository
+public class EventRepositoryImpl extends AbstractHibernateDao<Event, Long> implements EventRepository {
     @Override
     public List<Event> getAllByTitle(String title) {
-        return super.getAll().stream().filter(e->e.getTitle().equals(title)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("title", title));
+        return findByCriteria(detachedCriteria);
     }
 
     @Override
     public List<Event> getAllByDate(Date date) {
-        return super.getAll().stream().filter(e->e.getDate().equals(date)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("date", date));
+        return findByCriteria(detachedCriteria);
     }
 
     @Override
     public List<Event> getAllByDay(Date day) {
-        return super.getAll().stream().filter(e -> isSameDays(day, e.getDate())).collect(Collectors.toList());
+        //TODO make it filter properly
+        Query<Event> query = getSession().createQuery("SELECT E FROM Event E", Event.class);
+        return query.list();
     }
 
-    private boolean isSameDays(Date day1, Date day2) {
-        return  extractYear(day1) == extractYear(day2) && extractDayOfYear(day1) == extractDayOfYear(day2);
-    }
 }

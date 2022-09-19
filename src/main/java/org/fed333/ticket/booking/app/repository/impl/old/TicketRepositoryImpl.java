@@ -1,10 +1,10 @@
-package org.fed333.ticket.booking.app.repository.impl;
+package org.fed333.ticket.booking.app.repository.impl.old;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
-import org.fed333.ticket.booking.app.repository.impl.component.LongIdGenerator;
+import org.fed333.ticket.booking.app.repository.impl.old.component.LongIdGenerator;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package org.fed333.ticket.booking.app.repository.impl.component;
+package org.fed333.ticket.booking.app.repository.impl.old.component;
 
 import lombok.Setter;
 
