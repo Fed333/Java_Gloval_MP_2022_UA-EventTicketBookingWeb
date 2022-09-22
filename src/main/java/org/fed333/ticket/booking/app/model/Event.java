@@ -1,27 +1,29 @@
 package org.fed333.ticket.booking.app.model;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Interface which represent Event entity.
- * @author Roman_Kovalchuk
- */
-public interface Event extends Identifiable<Long>{
-    /**
-     * Event id. UNIQUE.
-     * @return Event Id
-     */
-    Long getId();
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "event")
+public class Event implements Identifiable<Long> {
 
-    void setId(Long id);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String getTitle();
+    private String title;
 
-    void setTitle(String title);
+    private Date date;
 
-    Date getDate();
-
-    void setDate(Date date);
-
+    @OneToMany(targetEntity = Ticket.class, mappedBy = "event", fetch = FetchType.LAZY)
+    private List<Ticket> tickets;
 
 }

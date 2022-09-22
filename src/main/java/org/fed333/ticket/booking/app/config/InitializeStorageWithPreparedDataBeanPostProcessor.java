@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.impl.EventImpl;
-import org.fed333.ticket.booking.app.model.impl.TicketImpl;
-import org.fed333.ticket.booking.app.model.impl.UserImpl;
 import org.fed333.ticket.booking.app.repository.impl.old.component.StorageData;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -44,9 +41,9 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
                 String usersJsonString = jsonNode.get("users").toPrettyString();
                 String ticketsJsonString = jsonNode.get("tickets").toPrettyString();
 
-                List<? extends Event> events = mapper.readValue(eventsJsonString, new TypeReference<List<EventImpl>>(){});
-                List<? extends User> users = mapper.readValue(usersJsonString, new TypeReference<List<UserImpl>>(){});
-                List<? extends Ticket> tickets = mapper.readValue(ticketsJsonString, new TypeReference<List<TicketImpl>>(){});
+                List<? extends Event> events = mapper.readValue(eventsJsonString, new TypeReference<List<Event>>(){});
+                List<? extends User> users = mapper.readValue(usersJsonString, new TypeReference<List<User>>(){});
+                List<? extends Ticket> tickets = mapper.readValue(ticketsJsonString, new TypeReference<List<Ticket>>(){});
 
                 log.info("events: {}", events);
                 log.info("users: {}", users);
@@ -55,14 +52,6 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
                 events.forEach(e->storage.getEventRepository().save(e));
                 users.forEach(u->storage.getUserRepository().save(u));
                 tickets.forEach(t->storage.getTicketRepository().save(t));
-
-                Long maxEventId = events.stream().map(Event::getId).max(Long::compare).orElse(0L);
-                Long maxUserId = users.stream().map(User::getId).max(Long::compare).orElse(0L);
-                Long maxTicketId = tickets.stream().map(Ticket::getId).max(Long::compare).orElse(0L);
-
-                storage.getUserRepository().getIdGenerator().setCurrId(maxUserId);
-                storage.getEventRepository().getIdGenerator().setCurrId(maxEventId);
-                storage.getTicketRepository().getIdGenerator().setCurrId(maxTicketId);
 
                 log.info("Filling of the prepared data, has been completed!");
             } catch (IOException e) {

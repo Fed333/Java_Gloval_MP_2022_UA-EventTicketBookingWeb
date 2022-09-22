@@ -7,10 +7,12 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
 @Repository
+@Transactional
 public class EventRepositoryImpl extends AbstractHibernateDao<Event, Long> implements EventRepository {
     @Override
     public List<Event> getAllByTitle(String title) {
@@ -32,5 +34,7 @@ public class EventRepositoryImpl extends AbstractHibernateDao<Event, Long> imple
         Query<Event> query = getSession().createQuery("SELECT E FROM Event E", Event.class);
         return query.list();
     }
+
+
 
 }

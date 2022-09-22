@@ -1,27 +1,28 @@
 package org.fed333.ticket.booking.app.model;
 
+import lombok.*;
+
+import javax.persistence.*;
+
 /**
- * Interface which represent User entity.
+ * Entity User implementation.
  * @author Roman_Kovalchuk
- */
-public interface User extends Identifiable<Long> {
-    /**
-     * User Id. UNIQUE.
-     * @return User Id.
-     */
-    Long getId();
+ * */
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "users")
+public class User implements Identifiable<Long> {
 
-    void setId(Long id);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String getName();
+    private String name;
 
-    void setName(String name);
+    private String email;
 
-    /**
-     * User email. UNIQUE.
-     * @return User email.
-     */
-    String getEmail();
-
-    void setEmail(String email);
 }

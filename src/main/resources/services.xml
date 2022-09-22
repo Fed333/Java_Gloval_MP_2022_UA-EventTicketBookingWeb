@@ -3,10 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/context
-                           https://www.springframework.org/schema/context/spring-context.xsd"
+                           https://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           https://www.springframework.org/schema/tx/spring-tx.xsd"
        default-init-method="init">
 
     <context:annotation-config/>
@@ -33,30 +36,30 @@
     <bean id="slicePaginator"
           class="org.fed333.ticket.booking.app.service.component.SlicePaginator"/>
 
-    <bean id="eventRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.old.EventRepositoryImpl">
-        <property name="idGenerator" ref="idGenerator"/>
-    </bean>
+<!--    <bean id="eventRepository"-->
+<!--          class="org.fed333.ticket.booking.app.repository.impl.old.EventRepositoryImpl">-->
+<!--        <property name="idGenerator" ref="idGenerator"/>-->
+<!--    </bean>-->
 
-    <bean id="hibernateEventRepository"
+    <bean id="eventRepository"
           class="org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl">
     </bean>
 
-    <bean id="ticketRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.old.TicketRepositoryImpl">
-        <property name="idGenerator" ref="idGenerator"/>
-    </bean>
+<!--    <bean id="ticketRepository"-->
+<!--          class="org.fed333.ticket.booking.app.repository.impl.old.TicketRepositoryImpl">-->
+<!--        <property name="idGenerator" ref="idGenerator"/>-->
+<!--    </bean>-->
 
-    <bean id="hibernateTicketRepository"
+    <bean id="ticketRepository"
           class="org.fed333.ticket.booking.app.repository.impl.TicketRepositoryImpl">
     </bean>
 
-    <bean id="userRepository"
-          class="org.fed333.ticket.booking.app.repository.impl.old.UserRepositoryImpl">
-        <property name="idGenerator" ref="idGenerator"/>
-    </bean>
+<!--    <bean id="userRepository"-->
+<!--          class="org.fed333.ticket.booking.app.repository.impl.old.UserRepositoryImpl">-->
+<!--        <property name="idGenerator" ref="idGenerator"/>-->
+<!--    </bean>-->
 
-    <bean id="hibernateUserRepository"
+    <bean id="userRepository"
           class="org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl">
     </bean>
 
@@ -94,5 +97,7 @@
         <property name="userRepository" ref="userRepository"/>
         <property name="ticketRepository" ref="ticketRepository"/>
     </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

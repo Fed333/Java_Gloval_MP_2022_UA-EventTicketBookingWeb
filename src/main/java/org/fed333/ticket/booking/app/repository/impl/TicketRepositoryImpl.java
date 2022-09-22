@@ -2,14 +2,15 @@ package org.fed333.ticket.booking.app.repository.impl;
 
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
-import org.fed333.ticket.booking.app.repository.impl.AbstractHibernateDao;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 @SuppressWarnings("unchecked")
 public class TicketRepositoryImpl extends AbstractHibernateDao<Ticket, Long> implements TicketRepository {
     @Override

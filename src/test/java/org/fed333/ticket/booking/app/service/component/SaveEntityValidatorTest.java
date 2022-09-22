@@ -1,7 +1,7 @@
 package org.fed333.ticket.booking.app.service.component;
 
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.impl.UserImpl;
+import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class SaveEntityValidatorTest {
 
     @Before
     public void setUp() {
-        testUser = UserImpl.builder()
+        testUser = User.builder()
                 .id(1L)
                 .name("Test")
                 .email("test@mail.com").build();

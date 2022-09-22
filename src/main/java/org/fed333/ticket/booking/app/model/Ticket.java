@@ -1,46 +1,38 @@
 package org.fed333.ticket.booking.app.model;
 
-/**
- * Interface which represents Ticket entity.
- * @author Roman_Kovalchuk
- */
-public interface Ticket extends Identifiable<Long>{
-    enum Category {STANDARD, PREMIUM, BAR}
+import lombok.*;
 
-    /**
-     * Ticket Id. UNIQUE.
-     * @return Ticket Id.
-     */
-    Long getId();
+import javax.persistence.*;
 
-    void setId(Long id);
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "ticket")
+public class Ticket implements Identifiable<Long> {
 
-    Long getEventId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    void setEventId(Long eventId);
+    private Long eventId;
 
-    Event getEvent();
+    @OneToOne(targetEntity = Event.class)
+    private Event event;
 
-    void setEvent(Event event);
+    private Long userId;
 
-    Long getUserId();
+    @OneToOne(targetEntity = User.class)
+    private User user;
 
-    void setUserId(Long userId);
+    private Category category;
 
-    User getUser();
+    private int place;
 
-    void setUser(User user);
+    private boolean cancelled;
 
-    Category getCategory();
-
-    void setCategory(Category category);
-
-    int getPlace();
-
-    void setPlace(int place);
-
-    boolean isCancelled();
-
-    void setCancelled(boolean isCancelled);
+    public enum Category {STANDARD, PREMIUM, BAR}
 
 }

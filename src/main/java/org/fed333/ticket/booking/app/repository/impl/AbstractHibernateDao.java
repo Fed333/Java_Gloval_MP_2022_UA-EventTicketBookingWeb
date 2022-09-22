@@ -8,12 +8,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Objects;
 
+@Transactional
 public abstract class AbstractHibernateDao<E extends Identifiable<ID>, ID extends Serializable> implements CrudRepository<E, ID> {
 
     private final Class<E> entityClass = getEntityClass();
