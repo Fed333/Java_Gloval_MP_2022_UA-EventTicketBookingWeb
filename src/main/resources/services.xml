@@ -23,12 +23,6 @@
         <property name="locations" value="classpath:application.properties"/>
     </bean>
 
-    <bean id="idGenerator"
-          class="org.fed333.ticket.booking.app.repository.impl.old.component.LongIdGenerator"
-          scope="prototype">
-        <property name="currId" value="0"/>
-    </bean>
-
     <bean id="saveEntityValidator"
           class="org.fed333.ticket.booking.app.service.component.SaveEntityValidator"
           scope="prototype">
@@ -78,7 +72,7 @@
     </bean>
 
     <bean id="storage"
-          class="org.fed333.ticket.booking.app.repository.impl.old.component.StorageData">
+          class="org.fed333.ticket.booking.app.util.StorageDataUtil">
         <property name="eventRepository" ref="eventRepository"/>
         <property name="userRepository" ref="userRepository"/>
         <property name="ticketRepository" ref="ticketRepository"/>
