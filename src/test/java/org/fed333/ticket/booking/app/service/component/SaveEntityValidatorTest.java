@@ -1,14 +1,13 @@
 package org.fed333.ticket.booking.app.service.component;
 
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.when;
 
