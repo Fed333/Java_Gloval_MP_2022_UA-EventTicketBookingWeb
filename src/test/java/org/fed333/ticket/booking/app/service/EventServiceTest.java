@@ -2,7 +2,7 @@ package org.fed333.ticket.booking.app.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.impl.EventImpl;
+import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.service.component.SlicePaginator;
@@ -48,7 +48,7 @@ public class EventServiceTest {
     public void setUp() {
         eventService.setSaveEventValidator(eventValidator);
         eventService.setPaginator(new SlicePaginator());
-        testEvent = EventImpl.builder()
+        testEvent = Event.builder()
                 .id(1L)
                 .title("test event")
                 .date(new Date()).build();
@@ -122,7 +122,7 @@ public class EventServiceTest {
     }
 
     private Event createTestEvent(Long id) {
-        return EventImpl.builder()
+        return Event.builder()
                 .id(id)
                 .title("Event" + id)
                 .date(testDate).build();

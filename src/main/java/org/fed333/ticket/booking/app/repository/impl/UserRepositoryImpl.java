@@ -1,31 +1,29 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.repository.UserRepository;
-import org.fed333.ticket.booking.app.repository.impl.component.LongIdGenerator;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class UserRepositoryImpl extends AbstractCrudDao<User, Long> implements UserRepository {
+@Repository
 
-    @Getter @Setter
-    private LongIdGenerator idGenerator;
-
-    @Override
-    protected Long nextId() {
-        return idGenerator.generateNextId();
-    }
+public class UserRepositoryImpl extends AbstractHibernateDao<User, Long> implements UserRepository {
 
     @Override
     public List<User> getAllByName(String name) {
-        return getAll().stream().filter(u->u.getName().equals(name)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("name", name));
+        return findByCriteria(detachedCriteria);
     }
 
     @Override
     public List<User> getAllByEmail(String email) {
-        return getAll().stream().filter(u->u.getEmail().equals(email)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("email", email));
+        return findByCriteria(detachedCriteria);
     }
 }

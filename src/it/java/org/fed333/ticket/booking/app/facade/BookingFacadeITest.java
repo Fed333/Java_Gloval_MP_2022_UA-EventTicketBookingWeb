@@ -3,7 +3,7 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.impl.TicketImpl;
+import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -290,7 +290,7 @@ public class BookingFacadeITest {
         Event testEvent = testEvents.get(4L);
         int place = 3;
         Ticket.Category category = Ticket.Category.STANDARD;
-        Ticket expectedTicket = TicketImpl.builder()
+        Ticket expectedTicket = Ticket.builder()
                 .userId(testUser.getId())
                 .eventId(testEvent.getId())
                 .place(place)

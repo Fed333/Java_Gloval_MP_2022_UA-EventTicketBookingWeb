@@ -1,4 +1,4 @@
-package org.fed333.ticket.booking.app.repository.impl.component;
+package org.fed333.ticket.booking.app.repository.impl.old.component;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,8 @@ import org.fed333.ticket.booking.app.repository.impl.TicketRepositoryImpl;
 import org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The bean, to initialize implementations of repository classes
@@ -22,13 +24,14 @@ import org.springframework.context.ApplicationContext;
 @Slf4j
 @ToString
 @Getter @Setter
+@Transactional
 public class StorageData {
 
-    private EventRepositoryImpl eventRepository;
+    private EventRepository eventRepository;
 
-    private UserRepositoryImpl userRepository;
+    private UserRepository userRepository;
 
-    private TicketRepositoryImpl ticketRepository;
+    private TicketRepository ticketRepository;
 
     private void init() {
         log.info("StorageData init() method invoked!");

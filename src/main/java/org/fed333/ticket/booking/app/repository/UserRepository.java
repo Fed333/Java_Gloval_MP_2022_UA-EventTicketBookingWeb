@@ -1,8 +1,10 @@
 package org.fed333.ticket.booking.app.repository;
 
 import org.fed333.ticket.booking.app.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 
 public interface UserRepository extends CrudRepository<User, Long>{
 

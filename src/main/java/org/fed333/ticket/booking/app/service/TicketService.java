@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.impl.TicketImpl;
+import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
@@ -43,7 +43,7 @@ public class TicketService {
             throw new RuntimeException("No found event with id " + eventId + " to create a ticket.");
         }
 
-        Ticket ticket = TicketImpl.builder()
+        Ticket ticket = Ticket.builder()
                 .userId(userId)
                 .eventId(eventId)
                 .place(place)

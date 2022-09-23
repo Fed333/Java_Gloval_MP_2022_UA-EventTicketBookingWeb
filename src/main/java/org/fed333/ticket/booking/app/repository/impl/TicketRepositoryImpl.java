@@ -1,36 +1,38 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
-import org.fed333.ticket.booking.app.repository.impl.component.LongIdGenerator;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class TicketRepositoryImpl extends AbstractCrudDao<Ticket, Long> implements TicketRepository {
+@Repository
 
-    @Getter @Setter
-    private LongIdGenerator idGenerator;
-
-    @Override
-    protected Long nextId() {
-        return idGenerator.generateNextId();
-    }
-
+@SuppressWarnings("unchecked")
+public class TicketRepositoryImpl extends AbstractHibernateDao<Ticket, Long> implements TicketRepository {
     @Override
     public List<Ticket> getAllByEventId(Long eventId) {
-        return getAll().stream().filter(t->t.getEventId().equals(eventId)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("event.id", eventId));
+        return (List<Ticket>) detachedCriteria.getExecutableCriteria(getSession()).list();
     }
 
     @Override
     public List<Ticket> getAllByUserId(Long userId) {
-        return getAll().stream().filter(t->t.getUserId().equals(userId)).collect(Collectors.toList());
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("user.id", userId));
+        return (List<Ticket>) detachedCriteria.getExecutableCriteria(getSession()).list();
     }
 
     @Override
     public Ticket getByUserIdAndEventId(Long userId, Long eventId) {
-        return getAll().stream().filter(t->t.getEventId().equals(eventId)).filter(t->t.getUserId().equals(userId)).findFirst().orElse(null);
+        DetachedCriteria detachedCriteria = getDetachedCriteria();
+        detachedCriteria.add(Restrictions.eq("event.id", eventId));
+        detachedCriteria.add(Restrictions.eq("user.id", userId));
+        return (Ticket) detachedCriteria.getExecutableCriteria(getSession()).uniqueResult();
     }
+
 }
