@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class EventRepositoryImpl extends AbstractHibernateDao<Event, Long> implements EventRepository {
     @Override
     public List<Event> getAllByTitle(String title) {

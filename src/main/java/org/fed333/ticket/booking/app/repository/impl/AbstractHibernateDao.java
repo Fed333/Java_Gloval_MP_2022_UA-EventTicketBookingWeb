@@ -15,7 +15,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Objects;
 
-@Transactional
 public abstract class AbstractHibernateDao<E extends Identifiable<ID>, ID extends Serializable> implements CrudRepository<E, ID> {
 
     private final Class<E> entityClass = getEntityClass();

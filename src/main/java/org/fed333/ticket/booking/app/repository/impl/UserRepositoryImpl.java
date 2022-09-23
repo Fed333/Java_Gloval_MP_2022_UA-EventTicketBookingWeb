@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class UserRepositoryImpl extends AbstractHibernateDao<User, Long> implements UserRepository {
 
     @Override

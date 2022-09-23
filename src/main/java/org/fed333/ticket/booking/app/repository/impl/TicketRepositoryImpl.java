@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
+
 @SuppressWarnings("unchecked")
 public class TicketRepositoryImpl extends AbstractHibernateDao<Ticket, Long> implements TicketRepository {
     @Override

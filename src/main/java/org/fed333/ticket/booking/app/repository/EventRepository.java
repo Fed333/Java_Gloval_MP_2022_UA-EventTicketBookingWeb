@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@Transactional
+
 public interface EventRepository extends CrudRepository<Event, Long>{
 
     List<Event> getAllByTitle(String title);
