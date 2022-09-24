@@ -55,26 +55,26 @@ public class TestStorageUtil {
         ).collect(toMap(o -> (Long) o[0], o -> (User) o[1]));
         testTickets = Stream.of(
                 new Object[][]{
-                    {1L, new Ticket(1L,  1L, null,  1L, null,  Ticket.Category.PREMIUM,  12,  false)},
-                    {2L, new Ticket(2L,  1L, null,  3L, null,  Ticket.Category.STANDARD,  13,  false)},
-                    {3L, new Ticket(3L,  1L, null,  5L, null,  Ticket.Category.BAR,  2,  true)},
-                    {4L, new Ticket(4L,  1L, null,  13L, null,  Ticket.Category.STANDARD,  10,  true)},
-                    {5L, new Ticket(5L,  2L, null,  11L, null,  Ticket.Category.STANDARD,  1,  false)},
-                    {6L, new Ticket(6L,  2L, null,  14L, null,  Ticket.Category.STANDARD,  2,  false)},
-                    {7L, new Ticket(7L,  2L, null,  6L, null,  Ticket.Category.STANDARD,  3,  true)},
-                    {8L, new Ticket(8L,  3L, null,  4L, null,  Ticket.Category.STANDARD,  132,  false)},
-                    {9L, new Ticket(9L,  3L, null,  3L, null,  Ticket.Category.STANDARD,  133,  false)},
-                    {10L, new Ticket(10L,  3L, null,  1L, null,  Ticket.Category.STANDARD,  134,  false)},
-                    {11L, new Ticket(11L,  3L, null,  2L, null,  Ticket.Category.STANDARD,  135,  false)},
-                    {12L, new Ticket(12L,  3L, null,  7L, null,  Ticket.Category.STANDARD,  136,  false)},
-                    {13L, new Ticket(13L,  3L, null,  6L, null,  Ticket.Category.STANDARD,  137,  false)},
-                    {14L, new Ticket(14L,  3L, null,  8L, null,  Ticket.Category.PREMIUM,  10,  false)},
-                    {15L, new Ticket(15L,  3L, null,  9L, null,  Ticket.Category.PREMIUM,  11,  false)},
-                    {16L, new Ticket(16L,  3L, null,  10L, null,  Ticket.Category.PREMIUM,  12,  false)},
-                    {17L, new Ticket(17L,  3L, null,  13L, null,  Ticket.Category.STANDARD,  138,  false)},
-                    {18L, new Ticket(18L,  3L, null,  5L, null,  Ticket.Category.STANDARD,  139,  false)},
-                    {19L, new Ticket(19L,  3L, null,  12L, null,  Ticket.Category.STANDARD,  140,  false)},
-                    {20L, new Ticket(20L,  3L, null,  14L, null,  Ticket.Category.STANDARD,  141,  false)}
+                    {1L, new Ticket(1L,  Event.builder().id(1L).build(),   User.builder().id(1L).build(),   Ticket.Category.PREMIUM,  12,  false)},
+                    {2L, new Ticket(2L,  Event.builder().id(1L).build(),   User.builder().id(3L).build(),   Ticket.Category.STANDARD,  13,  false)},
+                    {3L, new Ticket(3L,  Event.builder().id(1L).build(),   User.builder().id(5L).build(),   Ticket.Category.BAR,  2,  true)},
+                    {4L, new Ticket(4L,  Event.builder().id(1L).build(),   User.builder().id(13L).build(),   Ticket.Category.STANDARD,  10,  true)},
+                    {5L, new Ticket(5L,  Event.builder().id(2L).build(),   User.builder().id(11L).build(),   Ticket.Category.STANDARD,  1,  false)},
+                    {6L, new Ticket(6L,  Event.builder().id(2L).build(),   User.builder().id(14L).build(),   Ticket.Category.STANDARD,  2,  false)},
+                    {7L, new Ticket(7L,  Event.builder().id(2L).build(),   User.builder().id(6L).build(),   Ticket.Category.STANDARD,  3,  true)},
+                    {8L, new Ticket(8L,  Event.builder().id(3L).build(),   User.builder().id(4L).build(),   Ticket.Category.STANDARD,  132,  false)},
+                    {9L, new Ticket(9L,  Event.builder().id(3L).build(),   User.builder().id(3L).build(),   Ticket.Category.STANDARD,  133,  false)},
+                    {10L, new Ticket(10L,  Event.builder().id(3L).build(),   User.builder().id(1L).build(),   Ticket.Category.STANDARD,  134,  false)},
+                    {11L, new Ticket(11L,  Event.builder().id(3L).build(),   User.builder().id(2L).build(),   Ticket.Category.STANDARD,  135,  false)},
+                    {12L, new Ticket(12L,  Event.builder().id(3L).build(),   User.builder().id(7L).build(),   Ticket.Category.STANDARD,  136,  false)},
+                    {13L, new Ticket(13L,  Event.builder().id(3L).build(),   User.builder().id(6L).build(),   Ticket.Category.STANDARD,  137,  false)},
+                    {14L, new Ticket(14L,  Event.builder().id(3L).build(),   User.builder().id(8L).build(),   Ticket.Category.PREMIUM,  10,  false)},
+                    {15L, new Ticket(15L,  Event.builder().id(3L).build(),   User.builder().id(9L).build(),   Ticket.Category.PREMIUM,  11,  false)},
+                    {16L, new Ticket(16L,  Event.builder().id(3L).build(),   User.builder().id(10L).build(),   Ticket.Category.PREMIUM,  12,  false)},
+                    {17L, new Ticket(17L,  Event.builder().id(3L).build(),   User.builder().id(13L).build(),   Ticket.Category.STANDARD,  138,  false)},
+                    {18L, new Ticket(18L,  Event.builder().id(3L).build(),   User.builder().id(5L).build(),   Ticket.Category.STANDARD,  139,  false)},
+                    {19L, new Ticket(19L,  Event.builder().id(3L).build(),   User.builder().id(12L).build(),   Ticket.Category.STANDARD,  140,  false)},
+                    {20L, new Ticket(20L,  Event.builder().id(3L).build(),   User.builder().id(14L).build(),   Ticket.Category.STANDARD,  141,  false)}
                 }
         ).collect(toMap(o -> (Long) o[0], o -> (Ticket) o[1]));
 

@@ -3,6 +3,7 @@ package org.fed333.ticket.booking.app.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -17,12 +18,14 @@ public class Ticket implements Identifiable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long eventId;
+//    @Column(name = "event_id", insertable = false, updatable = false)
+//    private Long eventId;
 
     @OneToOne(targetEntity = Event.class)
     private Event event;
 
-    private Long userId;
+//    @Column(name = "user_id", insertable = false, updatable = false)
+//    private Long userId;
 
     @OneToOne(targetEntity = User.class)
     private User user;
@@ -34,5 +37,29 @@ public class Ticket implements Identifiable<Long> {
     private boolean cancelled;
 
     public enum Category {STANDARD, PREMIUM, BAR}
+
+    public Long getEventId() {
+        return event.getId();
+    }
+
+    public Long getUserId() {
+        return user.getId();
+    }
+
+    public void setEventId(Long id) {
+        if (Objects.nonNull(event)) {
+            event.setId(id);
+        } else {
+            event = Event.builder().id(id).build();
+        }
+    }
+
+    public void setUserId(Long id) {
+        if (Objects.nonNull(user)) {
+            user.setId(id);
+        } else {
+            user = User.builder().id(id).build();
+        }
+    }
 
 }

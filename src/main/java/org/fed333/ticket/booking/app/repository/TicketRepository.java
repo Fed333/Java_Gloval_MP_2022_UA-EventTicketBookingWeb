@@ -10,6 +10,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long>{
 
     List<Ticket> getAllByEventId(Long eventId);
 
+    List<Ticket> getAllByEventId(Long eventId, int cursor, int size);
+
     List<Ticket> getAllByUserId(Long userId);
 
     Ticket getByUserIdAndEventId(Long userId, Long eventId);

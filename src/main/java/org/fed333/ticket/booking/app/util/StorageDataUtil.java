@@ -9,6 +9,7 @@ import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

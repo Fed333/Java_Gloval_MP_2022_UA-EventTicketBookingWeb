@@ -48,6 +48,8 @@ public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
     public void setUp() {
         testStorage = new TestStorageUtil();
         eventComparator = new EventEqualityComparator();
+        ticketComparator = new TicketEqualityComparator();
+        userComparator = new UserEqualityComparator();
     }
 
     @Test

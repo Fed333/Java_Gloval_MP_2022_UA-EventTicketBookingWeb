@@ -3,7 +3,6 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -47,6 +46,7 @@ public class BookingFacadeITest {
 
     @Before
     public void setUp() {
+
         TestStorageUtil testStorageUtil = new TestStorageUtil();
         testUsers = testStorageUtil.getTestUsers();
         testEvents = testStorageUtil.getTestEvents();
@@ -64,22 +64,22 @@ public class BookingFacadeITest {
 
         Event createdEvent = facade.createEvent(testEvent);
         assertThat(createdEvent.getId()).isNotNull();
-        assertThat(facade.getEventById(createdEvent.getId())).isEqualTo(createdEvent);
+        assertThat(facade.getEventById(createdEvent.getId())).usingComparator(eventComparator).isEqualTo(createdEvent);
 
         User createdUser = facade.createUser(testUser);
         assertThat(createdUser.getId()).isNotNull();
-        assertThat(facade.getUserById(createdUser.getId())).isEqualTo(createdUser);
+        assertThat(facade.getUserById(createdUser.getId())).usingComparator(userComparator).isEqualTo(createdUser);
 
         Ticket createdTicket = facade.bookTicket(createdUser.getId(), createdEvent.getId(), 1, Ticket.Category.PREMIUM);
         assertThat(createdTicket.getId()).isNotNull();
 
         List<Ticket> bookedTicketsByUser = facade.getBookedTickets(createdUser, 1, 1);
         assertThat(bookedTicketsByUser).isNotEmpty();
-        assertThat(bookedTicketsByUser.get(0)).isEqualTo(createdTicket);
+        assertThat(bookedTicketsByUser.get(0)).usingComparator(ticketComparator).isEqualTo(createdTicket);
 
         List<Ticket> bookedTicketsByEvent = facade.getBookedTickets(createdEvent, 1, 1);
         assertThat(bookedTicketsByEvent).isNotEmpty();
-        assertThat(bookedTicketsByEvent.get(0)).isEqualTo(createdTicket);
+        assertThat(bookedTicketsByEvent.get(0)).usingComparator(ticketComparator).isEqualTo(createdTicket);
 
         boolean cancelled = facade.cancelTicket(createdTicket.getId());
         assertThat(cancelled).isTrue();
@@ -275,7 +275,7 @@ public class BookingFacadeITest {
     }
 
     @Test
-    public void deleteUser_shouldRemoveEvent() {
+    public void deleteUser_shouldRemoveUser() {
         User testUser = testUsers.get(16L);
 
         boolean deleted = facade.deleteUser(testUser.getId());
@@ -286,13 +286,13 @@ public class BookingFacadeITest {
 
     @Test
     public void bookTicket_shouldCreateTicketWithId() {
-        User testUser = testUsers.get(16L);
+        User testUser = testUsers.get(14L);
         Event testEvent = testEvents.get(4L);
         int place = 3;
         Ticket.Category category = Ticket.Category.STANDARD;
         Ticket expectedTicket = Ticket.builder()
-                .userId(testUser.getId())
-                .eventId(testEvent.getId())
+                .user(testUser)
+                .event(testEvent)
                 .place(place)
                 .category(category).build();
 
