@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.repository.impl.old.component.StorageData;
+import org.fed333.ticket.booking.app.util.StorageDataUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
@@ -30,7 +30,7 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (beanName.equals(TARGET_BEAN_NAME)) {
-            StorageData storage = (StorageData) bean;
+            StorageDataUtil storage = (StorageDataUtil) bean;
             log.info("Post processing of bean {} before initialization. The state {}.", beanName, bean);
             ObjectMapper mapper = new ObjectMapper();
             DateFormat df = new SimpleDateFormat(JSON_DATE_PATTERN);
