@@ -10,12 +10,17 @@ import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.util.StorageDataUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -41,17 +46,17 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
                 String usersJsonString = jsonNode.get("users").toPrettyString();
                 String ticketsJsonString = jsonNode.get("tickets").toPrettyString();
 
-                List<? extends Event> events = mapper.readValue(eventsJsonString, new TypeReference<List<Event>>(){});
-                List<? extends User> users = mapper.readValue(usersJsonString, new TypeReference<List<User>>(){});
-                List<? extends Ticket> tickets = mapper.readValue(ticketsJsonString, new TypeReference<List<Ticket>>(){});
+                List<Event> events = mapper.readValue(eventsJsonString, new TypeReference<List<Event>>(){});
+                List<User> users = mapper.readValue(usersJsonString, new TypeReference<List<User>>(){});
+                List<Ticket> tickets = mapper.readValue(ticketsJsonString, new TypeReference<List<Ticket>>(){});
 
                 log.info("events: {}", events);
                 log.info("users: {}", users);
                 log.info("tickets: {}", tickets);
 
-                events.forEach(e->storage.getEventRepository().save(e));
-                users.forEach(u->storage.getUserRepository().save(u));
-                tickets.forEach(t->storage.getTicketRepository().save(t));
+                storage.getEventRepository().save(events);
+                storage.getUserRepository().save(users);
+                storage.getTicketRepository().save(tickets);
 
                 log.info("Filling of the prepared data, has been completed!");
             } catch (IOException e) {

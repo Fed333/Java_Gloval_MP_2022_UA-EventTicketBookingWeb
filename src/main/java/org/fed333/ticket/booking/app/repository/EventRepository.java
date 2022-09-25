@@ -14,4 +14,7 @@ public interface EventRepository extends CrudRepository<Event, Long>{
     List<Event> getAllByDate(Date day);
 
     List<Event> getAllByDay(Date day);
+
+    List<Event> getAllByDay(Date day, int offset, int size);
+
 }

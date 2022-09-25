@@ -9,6 +9,7 @@ import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
 import org.fed333.ticket.booking.app.utils.TestingDataUtils;
 import org.junit.Before;
@@ -88,8 +89,8 @@ public class TicketServiceTest {
         when(mockedUserRepository.existsById(userId)).thenReturn(true);
         when(mockedEventRepository.existsById(eventId)).thenReturn(true);
         Ticket expectedTicket = Ticket.builder()
-                .userId(userId)
-                .eventId(eventId)
+                .user(User.builder().id(userId).build())
+                .event(Event.builder().id(eventId).build())
                 .place(place)
                 .category(Ticket.Category.STANDARD).build();
         ArgumentCaptor<Ticket> ticketCaptor = ArgumentCaptor.forClass(Ticket.class);
@@ -142,7 +143,7 @@ public class TicketServiceTest {
         when(mockedTicketRepository.getAllByEventId(testEvent.getId())).thenReturn(expectedTickets);
         when(mockedPaginator.paginateList(expectedTickets,1,5)).thenReturn(expectedTickets);
 
-        List<Ticket> actualTickets = ticketService.getBookedTickets(testEvent, size, cursor);
+        List<Ticket> actualTickets = ticketService.getBookedTickets(testEvent, new PageUtil(cursor, size));
 
         assertThat(actualTickets).usingElementComparator(ticketComparator).isEqualTo(expectedTickets);
     }
@@ -153,7 +154,7 @@ public class TicketServiceTest {
         List<Ticket> expectedTickets = Stream.iterate(1L, i -> i + 1).limit(5).map(TestingDataUtils::createTestTicket).collect(Collectors.toList());
         when(mockedTicketRepository.getAllByEventId(testEvent.getId())).thenReturn(expectedTickets);
 
-        ticketService.getBookedTickets(testEvent, size, cursor);
+        ticketService.getBookedTickets(testEvent, new PageUtil(cursor, size));
 
         verify(mockedTicketRepository).getAllByEventId(testEvent.getId());
     }
@@ -165,7 +166,7 @@ public class TicketServiceTest {
         when(mockedTicketRepository.getAllByEventId(testEvent.getId())).thenReturn(expectedTickets);
         when(mockedPaginator.paginateList(expectedTickets,1,5)).thenReturn(expectedTickets);
 
-        ticketService.getBookedTickets(testEvent, size, cursor);
+        ticketService.getBookedTickets(testEvent, new PageUtil(cursor, size));
 
         verify(mockedPaginator).paginateList(expectedTickets, cursor, size);
     }

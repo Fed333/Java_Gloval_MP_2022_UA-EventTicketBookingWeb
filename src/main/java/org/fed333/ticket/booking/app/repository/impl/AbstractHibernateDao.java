@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,9 +39,18 @@ public abstract class AbstractHibernateDao<E extends Identifiable<ID>, ID extend
     }
 
     @Override
+    public Collection<E> save(Collection<E> entities) {
+        for (E e : entities) {
+            getSession().save(e);
+        }
+        getSession().flush();
+        return entities;
+    }
+
+    @Override
     public E save(E e) {
         Objects.requireNonNull(e);
-        getSession().save(e);
+        getSession().saveOrUpdate(e);
         getSession().flush();
         return e;
     }
@@ -93,5 +103,4 @@ public abstract class AbstractHibernateDao<E extends Identifiable<ID>, ID extend
     private Class<E> getEntityClass() {
         return (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
 }

@@ -12,6 +12,7 @@ import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class TicketService {
         }
 
         Ticket ticket = Ticket.builder()
-                .userId(userId)
-                .eventId(eventId)
+                .user(User.builder().id(userId).build())
+                .event(Event.builder().id(eventId).build())
                 .place(place)
                 .category(category).build();
 
@@ -58,13 +59,14 @@ public class TicketService {
         return paginator.paginateList(ticketRepository.getAllByUserId(user.getId()), pageNum, pageSize);
     }
 
-    public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return paginator.paginateList(ticketRepository.getAllByEventId(event.getId()), pageNum, pageSize);
+    public List<Ticket> getBookedTickets(Event event, PageUtil page) {
+        return ticketRepository.getAllByEventId(event.getId(), page.getOffset(), page.getSize());
     }
 
     public boolean cancelTicket(long ticketId) {
         Ticket ticketToCancel = ticketRepository.getById(ticketId);
         ticketToCancel.setCancelled(true);
+        ticketRepository.save(ticketToCancel);
         return ticketToCancel.isCancelled();
     }
 
