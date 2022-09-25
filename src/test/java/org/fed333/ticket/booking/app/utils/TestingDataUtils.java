@@ -24,8 +24,8 @@ public class TestingDataUtils {
 
     public static Ticket createTestTicket(Long id) {
         return Ticket.builder()
-                .userId(id)
-                .eventId(id)
+                .user(User.builder().id(id).build())
+                .event(Event.builder().id(id).build())
                 .category(Ticket.Category.STANDARD)
                 .place((int)(long)id).build();
     }

@@ -8,6 +8,7 @@ import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
 import org.fed333.ticket.booking.app.service.UserService;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -93,7 +94,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(event, pageSize, pageNum);
+        return ticketService.getBookedTickets(event, new PageUtil(pageNum, pageSize));
     }
 
     @Override

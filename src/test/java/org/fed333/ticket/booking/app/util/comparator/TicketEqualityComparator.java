@@ -9,8 +9,8 @@ public class TicketEqualityComparator implements Comparator<Ticket> {
     @Override
     public int compare(Ticket o1, Ticket o2) {
         return Comparator.comparing(Ticket::getId, Comparator.nullsFirst(Long::compare))
-                .thenComparing(Ticket::getEventId)
-                .thenComparing(Ticket::getUserId)
+                .thenComparing(t->t.getEvent().getId())
+                .thenComparing(t->t.getUser().getId())
                 .thenComparing(Ticket::getPlace)
                 .thenComparing(Ticket::getCategory)
                 .thenComparing(Ticket::isCancelled).compare(o1,o2);
