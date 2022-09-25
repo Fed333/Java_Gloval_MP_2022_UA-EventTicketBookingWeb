@@ -22,6 +22,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.DateUtils.parseDate;
+import static org.fed333.ticket.booking.app.utils.DateUtils.parseDateTime;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -120,8 +121,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnAll() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Arrays.asList(testEvents.get(1L), testEvents.get(2L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Arrays.asList(testEvents.get(7L), testEvents.get(8L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 2, 1);
 
@@ -130,8 +131,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnPage1() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Collections.singletonList(testEvents.get(1L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Collections.singletonList(testEvents.get(7L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 1, 1);
 
@@ -140,8 +141,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnPage2() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Collections.singletonList(testEvents.get(2L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Collections.singletonList(testEvents.get(8L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 1, 2);
 
@@ -171,7 +172,7 @@ public class BookingFacadeITest {
     public void updateEvent_shouldChangeData() {
         Event testEvent = testEvents.get(3L);
         testEvent.setTitle("Kalush charity music \"STEFANIA\" concert.");
-        testEvent.setDate(parseDate("2022-09-06 17:45:00"));
+        testEvent.setDate(parseDateTime("2022-09-06 17:45:00"));
 
         facade.updateEvent(testEvent);
         Event actualEvent = facade.getEventById(testEvent.getId());
@@ -252,14 +253,6 @@ public class BookingFacadeITest {
         User actualUser = facade.getUserById(expectedUser.getId());
 
         assertThat(actualUser).usingComparator(userComparator).isEqualTo(expectedUser);
-    }
-
-    @Test
-    public void updateUser() {
-    }
-
-    @Test
-    public void deleteUser() {
     }
 
     @Test
