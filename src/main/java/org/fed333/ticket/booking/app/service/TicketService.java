@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.service.component.SlicePaginator;
 import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.List;
@@ -25,9 +23,6 @@ public class TicketService {
     private final UserRepository userRepository;
 
     private final EventRepository eventRepository;
-
-    @Setter
-    private SlicePaginator paginator;
 
     @Setter
     private SaveEntityValidator<Ticket, Long> saveTicketValidator;
@@ -55,8 +50,8 @@ public class TicketService {
         return ticket;
     }
 
-    public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return paginator.paginateList(ticketRepository.getAllByUserId(user.getId()), pageNum, pageSize);
+    public List<Ticket> getBookedTickets(User user, PageUtil page) {
+        return ticketRepository.getAllByUserId(user.getId(), page.getOffset(), page.getSize());
     }
 
     public List<Ticket> getBookedTickets(Event event, PageUtil page) {

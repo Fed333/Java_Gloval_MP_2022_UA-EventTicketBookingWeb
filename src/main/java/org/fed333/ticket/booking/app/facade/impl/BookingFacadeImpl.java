@@ -29,12 +29,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.getEventsByTitle(title, pageSize, pageNum);
+        return eventService.getEventsByTitle(title, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return eventService.getEventsForDay(day, pageSize, pageNum);
+        return eventService.getEventsForDay(day, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return userService.getUsersByName(name, pageSize, pageNum);
+        return userService.getUsersByName(name, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(user, pageSize, pageNum);
+        return ticketService.getBookedTickets(user, new PageUtil(pageNum, pageSize));
     }
 
     @Override

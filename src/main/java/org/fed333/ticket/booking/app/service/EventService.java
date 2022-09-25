@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -19,9 +19,6 @@ public class EventService {
     private final EventRepository eventRepository;
 
     @Setter
-    private SlicePaginator paginator;
-
-    @Setter
     private SaveEntityValidator<Event, Long> saveEventValidator;
 
     private void init() {
@@ -32,12 +29,12 @@ public class EventService {
         return eventRepository.getById(id);
     }
 
-    public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return paginator.paginateList(eventRepository.getAllByTitle(title), pageNum, pageSize);
+    public List<Event> getEventsByTitle(String title, PageUtil page) {
+        return eventRepository.getAllByTitle(title, page.getOffset(), page.getSize());
     }
 
-    public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return paginator.paginateList(eventRepository.getAllByDay(day), pageNum, pageSize);
+    public List<Event> getEventsForDay(Date day, PageUtil page) {
+        return eventRepository.getAllByDay(day, page.getOffset(), page.getSize());
     }
 
     public Event createEvent(Event event) {

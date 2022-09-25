@@ -7,7 +7,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
@@ -30,9 +29,15 @@ public class TicketRepositoryImpl extends AbstractHibernateDao<Ticket, Long> imp
 
     @Override
     public List<Ticket> getAllByUserId(Long userId) {
+        return getAllByUserId(userId, -1, -1);
+    }
+
+    @Override
+    public List<Ticket> getAllByUserId(Long userId, int offset, int size) {
         DetachedCriteria detachedCriteria = getDetachedCriteria();
         detachedCriteria.add(Restrictions.eq("user.id", userId));
-        return (List<Ticket>) detachedCriteria.getExecutableCriteria(getSession()).list();
+        return findByCriteria(detachedCriteria, offset, size);
+
     }
 
     @Override
