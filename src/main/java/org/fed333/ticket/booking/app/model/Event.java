@@ -19,11 +19,16 @@ public class Event implements Identifiable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "date")
     private Date date;
 
     @OneToMany(targetEntity = Ticket.class, mappedBy = "event", fetch = FetchType.LAZY)
     private List<Ticket> tickets;
+
+    @Column(name = "ticket_price")
+    private double ticketPrice;
 
 }

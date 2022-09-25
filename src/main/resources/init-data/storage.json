@@ -1,13 +1,13 @@
 {
   "events": [
-    {"id":  1, "title": "EPAM Townhall", "date": "2022-09-05 15:30:00"},
-    {"id":  2, "title": "VNTU openday", "date": "2022-09-05 11:20:00"},
-    {"id":  3, "title": "Kalush charity music concert", "date": "2022-09-06 18:45:00"},
-    {"id":  4, "title": "EPAM Townhall", "date": "2022-10-05 15:30:00"},
-    {"id":  5, "title": "EPAM Townhall", "date": "2022-11-05 15:30:00"},
-    {"id":  6, "title": "Event1 to be deleted", "date": "2022-12-05 15:30:00"},
-    {"id":  7, "title": "Jazz concert", "date": "2022-09-25 19:30:00"},
-    {"id":  8, "title": "Speaking club", "date": "2022-09-25 15:30:00"}
+    {"id":  1, "title": "EPAM Townhall", "date": "2022-09-05 15:30:00", "ticketPrice":  20 },
+    {"id":  2, "title": "VNTU openday", "date": "2022-09-05 11:20:00", "ticketPrice":  20},
+    {"id":  3, "title": "Kalush charity music concert", "date": "2022-09-06 18:45:00", "ticketPrice":  3600},
+    {"id":  4, "title": "EPAM Townhall", "date": "2022-10-05 15:30:00", "ticketPrice":  20},
+    {"id":  5, "title": "EPAM Townhall", "date": "2022-11-05 15:30:00", "ticketPrice":  20},
+    {"id":  6, "title": "Event1 to be deleted", "date": "2022-12-05 15:30:00", "ticketPrice":  20},
+    {"id":  7, "title": "Jazz concert", "date": "2022-09-25 19:30:00", "ticketPrice":  20},
+    {"id":  8, "title": "Speaking club", "date": "2022-09-25 15:30:00", "ticketPrice":  20}
   ],
   "users": [
     {"id": 1, "name":  "Roman", "email": "kovalchuk.roman03@gmail.com"},

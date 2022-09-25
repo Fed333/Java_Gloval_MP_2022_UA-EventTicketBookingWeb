@@ -24,14 +24,14 @@ public class TestStorageUtil {
     public TestStorageUtil() {
         testEvents = Stream.of(
                 new Object[][]{
-                        {1L, new Event(1L, "EPAM Townhall", parseDateTime("2022-09-05 15:30:00"), null)},
-                        {2L, new Event(2L, "VNTU openday", parseDateTime("2022-09-05 11:20:00"), null)},
-                        {3L, new Event(3L, "Kalush charity music concert", parseDateTime("2022-09-06 18:45:00"), null)},
-                        {4L, new Event(4L, "EPAM Townhall", parseDateTime("2022-10-05 15:30:00"), null)},
-                        {5L, new Event(5L, "EPAM Townhall", parseDateTime("2022-11-05 15:30:00"), null)},
-                        {6L, new Event(6L, "Event1 to be deleted", parseDateTime("2022-12-05 15:30:00"), null)},
-                        {7L, new Event(7L, "Jazz concert", parseDateTime("2022-09-25 19:30:00"), null)},
-                        {8L, new Event(8L, "Speaking club", parseDateTime("2022-09-25 15:30:00"), null)},
+                        {1L, new Event(1L, "EPAM Townhall", parseDateTime("2022-09-05 15:30:00"), null, 20 )},
+                        {2L, new Event(2L, "VNTU openday", parseDateTime("2022-09-05 11:20:00"), null, 20)},
+                        {3L, new Event(3L, "Kalush charity music concert", parseDateTime("2022-09-06 18:45:00"), null, 3600)},
+                        {4L, new Event(4L, "EPAM Townhall", parseDateTime("2022-10-05 15:30:00"), null, 20)},
+                        {5L, new Event(5L, "EPAM Townhall", parseDateTime("2022-11-05 15:30:00"), null, 20)},
+                        {6L, new Event(6L, "Event1 to be deleted", parseDateTime("2022-12-05 15:30:00"), null, 20)},
+                        {7L, new Event(7L, "Jazz concert", parseDateTime("2022-09-25 19:30:00"), null, 20)},
+                        {8L, new Event(8L, "Speaking club", parseDateTime("2022-09-25 15:30:00"), null, 20)},
                 }
         ).collect(toMap(o -> (Long) o[0], o -> (Event) o[1]));
 
