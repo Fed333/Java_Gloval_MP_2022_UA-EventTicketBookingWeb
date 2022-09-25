@@ -10,9 +10,9 @@
     {"id":  8, "title": "Speaking club", "date": "2022-09-25 15:30:00", "ticketPrice":  20}
   ],
   "users": [
-    {"id": 1, "name":  "Roman", "email": "kovalchuk.roman03@gmail.com"},
-    {"id": 2, "name":  "Pips", "email": "mpostryk@gmail.com"},
-    {"id": 3, "name":  "Ivan", "email": "builbik@gmail.com"},
+    {"id": 1, "name":  "Roman", "email": "kovalchuk.roman03@gmail.com", "account" : {"id": 1, "money":  6500}},
+    {"id": 2, "name":  "Pips", "email": "mpostryk@gmail.com", "account": {"id": 2, "money": 4500}},
+    {"id": 3, "name":  "Ivan", "email": "builbik@gmail.com", "account":  {"id": 3, "money": 7500}},
     {"id": 4, "name":  "Kyrylo", "email": "kyrylo@gmail.com"},
     {"id": 5, "name":  "Ivan", "email": "vanno8782@gmail.com"},
     {"id": 6, "name":  "Serhiy", "email": "meizum@gmail.com"},

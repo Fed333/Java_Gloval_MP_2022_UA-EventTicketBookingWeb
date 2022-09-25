@@ -3,6 +3,7 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -364,6 +365,11 @@ public class BookingFacadeITest {
 
         assertThat(cancelled).isTrue();
         assertThat(actualTicket.isCancelled()).isTrue();
+    }
+
+    @Test
+    public void refillAccount_shouldUpdateMoney() {
+
     }
 
 }

@@ -40,6 +40,10 @@
           class="org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl">
     </bean>
 
+    <bean id="userAccountRepository"
+          class="org.fed333.ticket.booking.app.repository.impl.UserAccountRepositoryImpl">
+    </bean>
+
     <bean id="userService"
           class="org.fed333.ticket.booking.app.service.UserService"
           init-method="init">
@@ -58,11 +62,16 @@
         <property name="saveEventValidator" ref="saveEntityValidator"/>
     </bean>
 
+    <bean id="userAccountService"
+          class="org.fed333.ticket.booking.app.service.UserAccountService">
+    </bean>
+
     <bean id="bookingFacade"
           class="org.fed333.ticket.booking.app.facade.impl.BookingFacadeImpl">
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="ticketService"/>
+        <constructor-arg ref="userAccountService"/>
     </bean>
 
     <bean id="storage"
@@ -70,6 +79,7 @@
         <property name="eventRepository" ref="eventRepository"/>
         <property name="userRepository" ref="userRepository"/>
         <property name="ticketRepository" ref="ticketRepository"/>
+        <property name="accountRepository" ref="userAccountRepository"/>
     </bean>
 
 </beans>

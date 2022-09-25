@@ -3,6 +3,7 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.model.Event;
+import org.fed333.ticket.booking.app.model.UserAccount;
 
 import java.util.Date;
 import java.util.List;
@@ -138,5 +139,13 @@ public interface BookingFacade {
      * @return Flag whether anything has been canceled.
      */
     boolean cancelTicket(long ticketId);
+
+    /**
+     * Refills the account money to the BookingFacade class.<br>
+     * @param account {@link UserAccount} to refill
+     * @param money refilled money
+     * @return refilled {@link UserAccount}
+     * */
+    UserAccount refillAccount(UserAccount account, double money);
 
 }

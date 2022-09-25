@@ -18,14 +18,8 @@ public class Ticket implements Identifiable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "event_id", insertable = false, updatable = false)
-//    private Long eventId;
-
     @OneToOne(targetEntity = Event.class)
     private Event event;
-
-//    @Column(name = "user_id", insertable = false, updatable = false)
-//    private Long userId;
 
     @OneToOne(targetEntity = User.class)
     private User user;

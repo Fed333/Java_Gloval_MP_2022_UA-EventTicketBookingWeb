@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
 import org.fed333.ticket.booking.app.util.StorageDataUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,6 +23,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanPostProcessor {
@@ -55,8 +59,10 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
                 log.info("tickets: {}", tickets);
 
                 storage.getEventRepository().save(events);
+                storage.getAccountRepository().save(users.stream().map(User::getAccount).filter(Objects::nonNull).collect(Collectors.toList()));
                 storage.getUserRepository().save(users);
                 storage.getTicketRepository().save(tickets);
+
 
                 log.info("Filling of the prepared data, has been completed!");
             } catch (IOException e) {

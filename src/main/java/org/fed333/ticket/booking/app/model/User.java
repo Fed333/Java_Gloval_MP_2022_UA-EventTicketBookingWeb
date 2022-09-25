@@ -25,4 +25,7 @@ public class User implements Identifiable<Long> {
 
     private String email;
 
+    @OneToOne(targetEntity = UserAccount.class)
+    private UserAccount account;
+
 }

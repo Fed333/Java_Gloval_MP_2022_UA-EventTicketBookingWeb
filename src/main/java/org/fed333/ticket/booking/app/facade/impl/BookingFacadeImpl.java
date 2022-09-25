@@ -5,8 +5,11 @@ import org.fed333.ticket.booking.app.facade.BookingFacade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
+import org.fed333.ticket.booking.app.service.UserAccountService;
 import org.fed333.ticket.booking.app.service.UserService;
 import org.fed333.ticket.booking.app.util.PageUtil;
 
@@ -21,6 +24,8 @@ public class BookingFacadeImpl implements BookingFacade {
     private final EventService eventService;
 
     private final TicketService ticketService;
+
+    private final UserAccountService accountService;
 
     @Override
     public Event getEventById(long eventId) {
@@ -101,4 +106,10 @@ public class BookingFacadeImpl implements BookingFacade {
     public boolean cancelTicket(long ticketId) {
         return ticketService.cancelTicket(ticketId);
     }
+
+    @Override
+    public UserAccount refillAccount(UserAccount account, double money) {
+        return accountService.refillAccount(account, money);
+    }
+
 }

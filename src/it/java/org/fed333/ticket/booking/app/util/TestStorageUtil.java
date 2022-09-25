@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -37,22 +38,22 @@ public class TestStorageUtil {
 
         testUsers = Stream.of(
                 new Object[][]{
-                        {1L, new User(1L, "Roman", "kovalchuk.roman03@gmail.com")},
-                        {2L, new User(2L, "Pips", "mpostryk@gmail.com")},
-                        {3L, new User(3L, "Ivan", "builbik@gmail.com")},
-                        {4L, new User(4L, "Kyrylo", "kyrylo@gmail.com")},
-                        {5L, new User(5L, "Ivan", "vanno8782@gmail.com")},
-                        {6L, new User(6L, "Serhiy", "meizum@gmail.com")},
-                        {7L, new User(7L, "Andrii", "riko@gmail.com")},
-                        {8L, new User(8L, "Iryna", "ira@gmail.com")},
-                        {9L, new User(9L, "Tetyana", "taniusha@gmail.com")},
-                        {10L, new User(10L, "Viktoria", "viktoria@gmail.com")},
-                        {11L, new User(11L, "Ivan", "tocker342@gmail.com")},
-                        {12L, new User(12L, "Mykhailo", "mykhailo@gmail.com")},
-                        {13L, new User(13L, "Hlib", "glego@gmail.com")},
-                        {14L, new User(14L, "Pavlo", "pavlo_makushak@gmail.com")},
-                        {15L, new User(15L, "Updated", "updated@gmail.com")},
-                        {16L, new User(16L, "Deleted", "deleted@gmail.com")}
+                        {1L, new User(1L, "Roman", "kovalchuk.roman03@gmail.com", UserAccount.builder().id(1L).money(6500d).build())},
+                        {2L, new User(2L, "Pips", "mpostryk@gmail.com", UserAccount.builder().id(2L).money(4500d).build())},
+                        {3L, new User(3L, "Ivan", "builbik@gmail.com", UserAccount.builder().id(3L).money(7500d).build())},
+                        {4L, new User(4L, "Kyrylo", "kyrylo@gmail.com", null)},
+                        {5L, new User(5L, "Ivan", "vanno8782@gmail.com", null)},
+                        {6L, new User(6L, "Serhiy", "meizum@gmail.com", null)},
+                        {7L, new User(7L, "Andrii", "riko@gmail.com", null)},
+                        {8L, new User(8L, "Iryna", "ira@gmail.com", null)},
+                        {9L, new User(9L, "Tetyana", "taniusha@gmail.com", null)},
+                        {10L, new User(10L, "Viktoria", "viktoria@gmail.com", null)},
+                        {11L, new User(11L, "Ivan", "tocker342@gmail.com", null)},
+                        {12L, new User(12L, "Mykhailo", "mykhailo@gmail.com", null)},
+                        {13L, new User(13L, "Hlib", "glego@gmail.com", null)},
+                        {14L, new User(14L, "Pavlo", "pavlo_makushak@gmail.com", null)},
+                        {15L, new User(15L, "Updated", "updated@gmail.com", null)},
+                        {16L, new User(16L, "Deleted", "deleted@gmail.com", null)}
                 }
         ).collect(toMap(o -> (Long) o[0], o -> (User) o[1]));
         testTickets = Stream.of(

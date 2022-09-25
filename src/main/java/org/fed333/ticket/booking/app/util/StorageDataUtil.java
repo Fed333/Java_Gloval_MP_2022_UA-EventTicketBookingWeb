@@ -6,6 +6,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +30,8 @@ public class StorageDataUtil {
     private UserRepository userRepository;
 
     private TicketRepository ticketRepository;
+
+    private UserAccountRepository accountRepository;
 
     private void init() {
         log.info("StorageDataUtil init() method invoked!");
