@@ -15,9 +15,14 @@ public class UserRepositoryImpl extends AbstractHibernateDao<User, Long> impleme
 
     @Override
     public List<User> getAllByName(String name) {
+        return getAllByName(name, -1, -1);
+    }
+
+    @Override
+    public List<User> getAllByName(String name, int offset, int size) {
         DetachedCriteria detachedCriteria = getDetachedCriteria();
         detachedCriteria.add(Restrictions.eq("name", name));
-        return findByCriteria(detachedCriteria);
+        return findByCriteria(detachedCriteria, offset, size);
     }
 
     @Override

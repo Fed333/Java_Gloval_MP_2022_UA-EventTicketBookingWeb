@@ -10,6 +10,8 @@ public interface UserRepository extends CrudRepository<User, Long>{
 
     List<User> getAllByName(String name);
 
+    List<User> getAllByName(String name, int offset, int size);
+
     List<User> getAllByEmail(String email);
 
 }

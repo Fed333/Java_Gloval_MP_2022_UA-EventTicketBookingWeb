@@ -15,9 +15,14 @@ import java.util.List;
 public class EventRepositoryImpl extends AbstractHibernateDao<Event, Long> implements EventRepository {
     @Override
     public List<Event> getAllByTitle(String title) {
+        return getAllByTitle(title, -1, -1);
+    }
+
+    @Override
+    public List<Event> getAllByTitle(String title, int offset, int size) {
         DetachedCriteria detachedCriteria = getDetachedCriteria();
         detachedCriteria.add(Restrictions.eq("title", title));
-        return findByCriteria(detachedCriteria);
+        return findByCriteria(detachedCriteria, offset, size);
     }
 
     @Override

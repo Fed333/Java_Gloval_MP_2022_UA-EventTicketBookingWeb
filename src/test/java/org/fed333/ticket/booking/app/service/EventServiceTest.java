@@ -2,10 +2,9 @@ package org.fed333.ticket.booking.app.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +46,6 @@ public class EventServiceTest {
     @Before
     public void setUp() {
         eventService.setSaveEventValidator(eventValidator);
-        eventService.setPaginator(new SlicePaginator());
         testEvent = Event.builder()
                 .id(1L)
                 .title("test event")
@@ -68,22 +66,22 @@ public class EventServiceTest {
     public void getEventsByTitle_shouldReturnSubList() {
         String title = testEvent.getTitle();
         int cursor = 2, size = 4;
-        List<Event> testList = Stream.iterate(1L, s -> s + 1).limit(10).map(this::createTestEvent).collect(Collectors.toList());
+        PageUtil page = new PageUtil(cursor, size);
         List<Event> expectedList = Stream.iterate(5L, s -> s + 1).limit(4).map(this::createTestEvent).collect(Collectors.toList());
-        when(mockedRepository.getAllByTitle(title)).thenReturn(testList);
+        when(mockedRepository.getAllByTitle(title, page.getOffset(), page.getSize())).thenReturn(expectedList);
 
-        assertThat(new ArrayList<>(eventService.getEventsByTitle(title, size, cursor))).usingComparatorForType(eventEqualityComparator, Event.class).isEqualTo(expectedList);
+        assertThat(new ArrayList<>(eventService.getEventsByTitle(title, page))).usingComparatorForType(eventEqualityComparator, Event.class).isEqualTo(expectedList);
     }
 
     @Test
     public void getEventsForDay_shouldReturnSubList() {
         Date date = parseDate("17-09-2022");
         int cursor = 2, size = 4;
-        List<Event> testList = Stream.iterate(1L, s -> s + 1).limit(10).map(this::createTestEvent).collect(Collectors.toList());
+        PageUtil page = new PageUtil(cursor, size);
         List<Event> expectedList = Stream.iterate(5L, s -> s + 1).limit(4).map(this::createTestEvent).collect(Collectors.toList());
-        when(mockedRepository.getAllByDay(date)).thenReturn(testList);
+        when(mockedRepository.getAllByDay(date, page.getOffset(), page.getSize())).thenReturn(expectedList);
 
-        assertThat(new ArrayList<>(eventService.getEventsForDay(date, size, cursor))).usingComparatorForType(eventEqualityComparator, Event.class).isEqualTo(expectedList);
+        assertThat(eventService.getEventsForDay(date, page)).usingElementComparator(eventEqualityComparator).isEqualTo(expectedList);
     }
 
     @Test

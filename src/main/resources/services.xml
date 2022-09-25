@@ -28,9 +28,6 @@
           scope="prototype">
     </bean>
 
-    <bean id="slicePaginator"
-          class="org.fed333.ticket.booking.app.service.component.SlicePaginator"/>
-
     <bean id="eventRepository"
           class="org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl">
     </bean>
@@ -46,21 +43,18 @@
     <bean id="userService"
           class="org.fed333.ticket.booking.app.service.UserService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveUserValidator" ref="saveEntityValidator"/>
     </bean>
 
     <bean id="ticketService"
           class="org.fed333.ticket.booking.app.service.TicketService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveTicketValidator" ref="saveEntityValidator"/>
     </bean>
 
     <bean id="eventService"
           class="org.fed333.ticket.booking.app.service.EventService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveEventValidator" ref="saveEntityValidator"/>
     </bean>
 
