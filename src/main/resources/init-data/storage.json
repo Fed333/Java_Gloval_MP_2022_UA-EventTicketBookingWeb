@@ -22,8 +22,8 @@
     {"id": 10, "name":  "Viktoria", "email": "viktoria@gmail.com"},
     {"id": 11, "name":  "Ivan", "email": "tocker342@gmail.com"},
     {"id": 12, "name":  "Mykhailo", "email": "mykhailo@gmail.com"},
-    {"id": 13, "name":  "Hlib", "email": "glego@gmail.com"},
-    {"id": 14, "name":  "Pavlo", "email": "pavlo_makushak@gmail.com"},
+    {"id": 13, "name":  "Hlib", "email": "glego@gmail.com", "account":  {"id": 4, "money": 2600}},
+    {"id": 14, "name":  "Pavlo", "email": "pavlo_makushak@gmail.com", "account":  {"id": 5, "money": 2500}},
     {"id": 15, "name":  "Updated", "email": "updated@gmail.com"},
     {"id": 16, "name":  "Deleted", "email": "deleted@gmail.com"}
   ],
