@@ -3,6 +3,7 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -383,7 +384,21 @@ public class BookingFacadeITest {
 
     @Test
     public void refillAccount_shouldUpdateMoney() {
+        UserAccount account = facade.getUserById(1L).getAccount();
+        int expectedMoney = 1234;
 
+        facade.refillAccount(account, expectedMoney);
+
+        account = facade.getUserById(1L).getAccount();
+        assertThat(account.getMoney()).isEqualTo(expectedMoney);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void refillAccount_ifNegativeShouldThrowException() {
+        UserAccount account = facade.getUserById(1L).getAccount();
+        int expectedMoney = -1;
+
+        facade.refillAccount(account, expectedMoney);
     }
 
 }
