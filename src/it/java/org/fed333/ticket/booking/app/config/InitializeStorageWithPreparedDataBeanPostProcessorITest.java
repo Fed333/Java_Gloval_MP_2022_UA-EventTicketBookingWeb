@@ -28,7 +28,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/resources/services.xml")
+@ContextConfiguration({"file:src/main/resources/services.xml", "file:src/it/resources/test-config.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
 
