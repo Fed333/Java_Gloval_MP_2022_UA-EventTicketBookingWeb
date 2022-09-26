@@ -50,8 +50,8 @@ public class TestStorageUtil {
                         {10L, new User(10L, "Viktoria", "viktoria@gmail.com", null)},
                         {11L, new User(11L, "Ivan", "tocker342@gmail.com", null)},
                         {12L, new User(12L, "Mykhailo", "mykhailo@gmail.com", null)},
-                        {13L, new User(13L, "Hlib", "glego@gmail.com", null)},
-                        {14L, new User(14L, "Pavlo", "pavlo_makushak@gmail.com", null)},
+                        {13L, new User(13L, "Hlib", "glego@gmail.com", UserAccount.builder().id(4L).money(2600d).build())},
+                        {14L, new User(14L, "Pavlo", "pavlo_makushak@gmail.com", UserAccount.builder().id(5L).money(2500d).build())},
                         {15L, new User(15L, "Updated", "updated@gmail.com", null)},
                         {16L, new User(16L, "Deleted", "deleted@gmail.com", null)}
                 }
