@@ -1,8 +1,6 @@
 package org.fed333.ticket.booking.app.utils;
 
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.*;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
@@ -19,7 +17,8 @@ public class TestingDataUtils {
         return Event.builder()
                 .id(id)
                 .title("Event" + id)
-                .date(TEST_DATE).build();
+                .date(TEST_DATE)
+                .ticketPrice(50d).build();
     }
 
     public static Ticket createTestTicket(Long id) {
@@ -34,13 +33,15 @@ public class TestingDataUtils {
         return User.builder()
                 .id(id)
                 .name("User" + id)
-                .email("user" + id + "@mail.com").build();
+                .email("user" + id + "@mail.com")
+                .account(UserAccount.builder().id(id).money(5000d).build()).build();
     }
 
     public static User createTestUserWithName(Long id, String name) {
         return User.builder()
                 .id(id)
                 .name(name)
-                .email("user" + id + "@mail.com").build();
+                .email("user" + id + "@mail.com")
+                .account(UserAccount.builder().id(id).money(5000d).build()).build();
     }
 }

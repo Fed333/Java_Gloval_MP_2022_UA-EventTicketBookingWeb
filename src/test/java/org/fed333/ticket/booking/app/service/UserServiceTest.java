@@ -1,6 +1,7 @@
 package org.fed333.ticket.booking.app.service;
 
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.util.PageUtil;
@@ -30,6 +31,12 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository mockedRepository;
+
+    @Mock
+    private UserAccountService accountService;
+
+    @Mock
+    private UserAccountRepository accountRepository;
 
     @Mock
     private SaveEntityValidator<User, Long> mockedValidator;

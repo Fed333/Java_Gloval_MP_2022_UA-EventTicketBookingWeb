@@ -3,7 +3,6 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.UserAccount;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -280,7 +279,7 @@ public class BookingFacadeITest {
 
     @Test
     public void bookTicket_shouldCreateTicketWithId() {
-        User testUser = testUsers.get(14L);
+        User testUser = testUsers.get(13L);
         Event testEvent = testEvents.get(4L);
         int place = 3;
         Ticket.Category category = Ticket.Category.STANDARD;
@@ -295,6 +294,21 @@ public class BookingFacadeITest {
         assertThat(actualTicket.getId()).isNotNull();
         expectedTicket.setId(actualTicket.getId());
         assertThat(actualTicket).usingComparator(ticketComparator).isEqualTo(expectedTicket);
+    }
+
+    @Test
+    public void bookTicket_shouldWithdrawUserAccountMoney() {
+        User testUser = testUsers.get(14L);
+        Event testEvent = testEvents.get(5L);
+        int place = 3;
+        double expectedMoney = testUser.getAccount().getMoney() - testEvent.getTicketPrice();
+        Ticket.Category category = Ticket.Category.STANDARD;
+
+        facade.bookTicket(testUser.getId(), testEvent.getId(), place, category);
+        User actualUser = facade.getUserById(testUser.getId());
+
+        assertThat(actualUser.getAccount().getMoney()).isEqualTo(expectedMoney);
+
     }
 
     @Test
