@@ -52,8 +52,10 @@ public class UserService {
         saveUserValidator.validateCreate(user);
 
         UserAccount account = user.getAccount();
-        UserAccount savedAccount = accountRepository.save(account);
-        user.setAccount(savedAccount);
+        if (Objects.nonNull(account)) {
+            UserAccount savedAccount = accountRepository.save(account);
+            user.setAccount(savedAccount);
+        }
         User saved = userRepository.save(user);
 
         log.info("User {} has been created successfully.", saved);
