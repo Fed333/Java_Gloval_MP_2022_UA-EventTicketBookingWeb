@@ -54,6 +54,7 @@ public class UserService {
         UserAccount account = user.getAccount();
         if (Objects.nonNull(account)) {
             UserAccount savedAccount = accountRepository.save(account);
+            log.info("Assigned account: id {} to the user: id {}", savedAccount.getId(), user.getId());
             user.setAccount(savedAccount);
         }
         User saved = userRepository.save(user);
@@ -75,6 +76,7 @@ public class UserService {
             log.info("User {} was deleted successfully.", removed);
             return true;
         }
+        log.info("User with id: {} couldn't be deleted.", userId);
         return false;
     }
 

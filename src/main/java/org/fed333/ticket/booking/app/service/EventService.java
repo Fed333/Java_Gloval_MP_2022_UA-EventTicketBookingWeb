@@ -57,6 +57,7 @@ public class EventService {
             log.info("Event {} was deleted successfully.", removed);
             return true;
         }
+        log.info("Event with id: {} couldn't be deleted.", eventId);
         return false;
     }
 
