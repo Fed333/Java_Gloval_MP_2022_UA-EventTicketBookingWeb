@@ -1,9 +1,11 @@
 package org.fed333.ticket.booking.app.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.UserAccount;
 import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 public class UserAccountService {
 
@@ -14,7 +16,9 @@ public class UserAccountService {
             throw new RuntimeException("Money to set, cannot be negative.");
         }
         account.setMoney(money);
-        return userAccountRepository.save(account);
+        UserAccount saved = userAccountRepository.save(account);
+        log.info("Refilled account id: {}, set money to {}", account.getId(), account.getMoney());
+        return saved;
     }
 
 }

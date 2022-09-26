@@ -15,7 +15,6 @@ import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,13 +40,16 @@ public class TicketService {
         Event event = eventRepository.getById(eventId);
 
         if (Objects.isNull(user)) {
+            log.error("No found user with id " + userId + " to create a ticket.");
             throw new RuntimeException("No found user with id " + userId + " to create a ticket.");
         }
         if (Objects.isNull(event)) {
+            log.error("No found event with id " + eventId + " to create a ticket.");
             throw new RuntimeException("No found event with id " + eventId + " to create a ticket.");
         }
         UserAccount account = user.getAccount();
         if (Objects.isNull(account) || event.getTicketPrice() > account.getMoney()) {
+            log.error("Cannot book event {id: " + event.getId() + "} for user {id: " + user.getId() + "}. Not enough money!");
             throw new RuntimeException("Cannot book event {id: " + event.getId() + "} for user {id: " + user.getId() + "}. Not enough money!");
         }
 
@@ -76,6 +78,7 @@ public class TicketService {
         Ticket ticketToCancel = ticketRepository.getById(ticketId);
         ticketToCancel.setCancelled(true);
         ticketRepository.save(ticketToCancel);
+        log.info("Ticket: id {} has been successfully cancelled.", ticketId);
         return ticketToCancel.isCancelled();
     }
 

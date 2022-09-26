@@ -66,6 +66,7 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
 
                 log.info("Filling of the prepared data, has been completed!");
             } catch (IOException e) {
+                log.error("Failed to initialize storage with test data. Cause: " + e);
                 throw new RuntimeException(e);
             }
         }
