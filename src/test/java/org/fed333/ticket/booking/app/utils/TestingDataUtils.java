@@ -33,7 +33,8 @@ public class TestingDataUtils {
         return User.builder()
                 .id(id)
                 .name("User" + id)
-                .email("user" + id + "@mail.com").build();
+                .email("user" + id + "@mail.com")
+                .account(UserAccount.builder().id(id).money(5000d).build()).build();
     }
 
     public static User createTestUserWithName(Long id, String name) {
@@ -41,6 +42,6 @@ public class TestingDataUtils {
                 .id(id)
                 .name(name)
                 .email("user" + id + "@mail.com")
-                .account(UserAccount.builder().money(5000d).build()).build();
+                .account(UserAccount.builder().id(id).money(5000d).build()).build();
     }
 }

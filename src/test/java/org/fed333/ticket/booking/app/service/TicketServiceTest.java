@@ -40,7 +40,11 @@ public class TicketServiceTest {
     private EventRepository mockedEventRepository;
 
     @Mock
+    private UserAccountService accountRepository;
+
+    @Mock
     private SaveEntityValidator<Ticket, Long> mockedValidator;
+
 
     @InjectMocks
     private TicketService ticketService;
@@ -62,7 +66,7 @@ public class TicketServiceTest {
     @Test(expected = RuntimeException.class)
     public void bookTicket_ifUserNotExistsShouldThrowException() {
         long userId = 1L, eventId = 2L;
-        when(mockedUserRepository.existsById(userId)).thenReturn(false);
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
 
         ticketService.bookTicket(userId, eventId, 3, Ticket.Category.STANDARD);
     }
@@ -70,8 +74,8 @@ public class TicketServiceTest {
     @Test(expected = RuntimeException.class)
     public void bookTicket_ifEventNotExistsShouldThrowException() {
         long userId = 1L, eventId = 2L;
-        when(mockedUserRepository.existsById(userId)).thenReturn(true);
-        when(mockedEventRepository.existsById(eventId)).thenReturn(false);
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
+        when(mockedEventRepository.getById(eventId)).thenReturn(null);
 
         ticketService.bookTicket(userId, eventId, 3, Ticket.Category.STANDARD);
     }
@@ -80,8 +84,8 @@ public class TicketServiceTest {
     public void bookTicket_ifOkShouldInvokeRepository() {
         long userId = 1L, eventId = 2L;
         int place = 3;
-        when(mockedUserRepository.existsById(userId)).thenReturn(true);
-        when(mockedEventRepository.existsById(eventId)).thenReturn(true);
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
+        when(mockedEventRepository.getById(eventId)).thenReturn(createTestEvent(eventId));
         Ticket expectedTicket = Ticket.builder()
                 .user(User.builder().id(userId).build())
                 .event(Event.builder().id(eventId).build())
@@ -111,7 +115,6 @@ public class TicketServiceTest {
     public void getBookedTicketsByUser_shouldInvokeRepository() {
         int cursor = 1, size = 5;
         PageUtil page = new PageUtil(cursor, size);
-        List<Ticket> expectedTickets = Stream.iterate(1L, i -> i + 1).limit(5).map(TestingDataUtils::createTestTicket).collect(Collectors.toList());
 
         ticketService.getBookedTickets(testUser, page);
 
