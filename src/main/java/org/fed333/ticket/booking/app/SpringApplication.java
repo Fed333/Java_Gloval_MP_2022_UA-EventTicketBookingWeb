@@ -2,9 +2,7 @@ package org.fed333.ticket.booking.app;
 
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.facade.BookingFacade;
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.*;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -24,7 +22,8 @@ public class SpringApplication {
         BookingFacade bookingFacade = context.getBean(BookingFacade.class);
         User user = User.builder()
                 .name("Roman")
-                .email("romakovalcuk524@gmail.com").build();
+                .email("romakovalcuk524@gmail.com")
+                .account(UserAccount.builder().money(5000d).build()).build();
         bookingFacade.createUser(user);
         User userById = bookingFacade.getUserById(user.getId());
         log.info("userById.equals(user) = {}", userById.equals(user));
