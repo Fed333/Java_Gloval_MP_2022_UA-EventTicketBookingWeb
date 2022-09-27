@@ -3,7 +3,7 @@ package org.fed333.ticket.booking.app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.fed333.ticket.booking.app.model.Event;
+import org.fed333.ticket.booking.app.model.entity.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +23,10 @@ public class EventService {
 
     private void init() {
         saveEventValidator.setRepository(eventRepository);
+    }
+
+    public List<Event> getEvents() {
+        return eventRepository.findAll();
     }
 
     public Event getEventById(Long id) {

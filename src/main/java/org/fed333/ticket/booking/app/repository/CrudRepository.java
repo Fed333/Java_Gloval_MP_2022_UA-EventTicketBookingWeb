@@ -1,8 +1,6 @@
 package org.fed333.ticket.booking.app.repository;
 
-import org.fed333.ticket.booking.app.model.Identifiable;
-import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Propagation;
+import org.fed333.ticket.booking.app.model.entity.Identifiable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;

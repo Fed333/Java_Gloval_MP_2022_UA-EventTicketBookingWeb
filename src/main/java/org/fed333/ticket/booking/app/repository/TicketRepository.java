@@ -1,6 +1,6 @@
 package org.fed333.ticket.booking.app.repository;
 
-import org.fed333.ticket.booking.app.model.Ticket;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

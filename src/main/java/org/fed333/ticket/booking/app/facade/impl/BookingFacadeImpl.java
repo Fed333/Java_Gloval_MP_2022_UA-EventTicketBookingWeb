@@ -2,10 +2,10 @@ package org.fed333.ticket.booking.app.facade.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.fed333.ticket.booking.app.facade.BookingFacade;
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.model.entity.Event;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
+import org.fed333.ticket.booking.app.model.entity.User;
+import org.fed333.ticket.booking.app.model.entity.UserAccount;
 import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
 import org.fed333.ticket.booking.app.service.UserAccountService;
