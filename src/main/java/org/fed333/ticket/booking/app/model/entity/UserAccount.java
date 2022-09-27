@@ -1,9 +1,8 @@
-package org.fed333.ticket.booking.app.model;
+package org.fed333.ticket.booking.app.model.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter

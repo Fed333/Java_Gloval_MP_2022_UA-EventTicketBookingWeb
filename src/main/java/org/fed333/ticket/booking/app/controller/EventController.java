@@ -1,33 +1,37 @@
 package org.fed333.ticket.booking.app.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.fed333.ticket.booking.app.mapper.EventMapper;
+import org.fed333.ticket.booking.app.model.dto.EventDto;
+import org.fed333.ticket.booking.app.service.EventService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toMap;
+import java.util.List;
 
 @Slf4j
-@Controller
+@Transactional
+@RestController
 @RequestMapping("/event")
+@RequiredArgsConstructor
 public class EventController {
 
-    private void init() {
-        log.info("EventController init invoked!");
+    private final EventService eventService;
+
+    private final EventMapper eventMapper;
+
+    @GetMapping(path = "/{eventId}")
+    public EventDto get(@PathVariable(name = "eventId") Long eventId) {
+        return eventMapper.toDto(eventService.getEventById(eventId));
     }
 
-    @RequestMapping
-    public @ResponseBody ResponseEntity<Map<String,String>> getAll() {
-        return ResponseEntity.ok(Stream.of(new Object[][]{
-                {"name", "myEvent"},
-                {"ticketPrice", "20"}
-        }).collect(toMap(o->(String)o[0], o->(String)o[1])));
+    @GetMapping
+    public List<EventDto> getAll() {
+        return eventMapper.toDtos(eventService.getEvents());
     }
 
 }

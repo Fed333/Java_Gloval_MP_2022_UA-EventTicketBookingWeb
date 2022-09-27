@@ -1,7 +1,6 @@
 package org.fed333.ticket.booking.app.repository;
 
-import org.fed333.ticket.booking.app.model.User;
-import org.springframework.transaction.annotation.Transactional;
+import org.fed333.ticket.booking.app.model.entity.User;
 
 import java.util.List;
 

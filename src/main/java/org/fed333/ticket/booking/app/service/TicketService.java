@@ -3,10 +3,10 @@ package org.fed333.ticket.booking.app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.model.entity.Event;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
+import org.fed333.ticket.booking.app.model.entity.User;
+import org.fed333.ticket.booking.app.model.entity.UserAccount;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
@@ -15,7 +15,6 @@ import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor

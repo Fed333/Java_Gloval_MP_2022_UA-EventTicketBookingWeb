@@ -1,14 +1,13 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
 import lombok.SneakyThrows;
-import org.fed333.ticket.booking.app.model.Identifiable;
+import org.fed333.ticket.booking.app.model.entity.Identifiable;
 import org.fed333.ticket.booking.app.repository.CrudRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;

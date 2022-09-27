@@ -1,12 +1,11 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository

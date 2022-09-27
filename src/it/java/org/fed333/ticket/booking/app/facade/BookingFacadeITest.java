@@ -1,8 +1,8 @@
 package org.fed333.ticket.booking.app.facade;
 
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.entity.Event;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
+import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;

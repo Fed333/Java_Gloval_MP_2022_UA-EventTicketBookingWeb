@@ -1,7 +1,7 @@
 package org.fed333.ticket.booking.app.service;
 
 import lombok.RequiredArgsConstructor;
-import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.model.entity.UserAccount;
 import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 
 @RequiredArgsConstructor

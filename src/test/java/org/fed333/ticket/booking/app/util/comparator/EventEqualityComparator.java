@@ -1,6 +1,6 @@
 package org.fed333.ticket.booking.app.util.comparator;
 
-import org.fed333.ticket.booking.app.model.Event;
+import org.fed333.ticket.booking.app.model.entity.Event;
 
 import java.util.Comparator;
 

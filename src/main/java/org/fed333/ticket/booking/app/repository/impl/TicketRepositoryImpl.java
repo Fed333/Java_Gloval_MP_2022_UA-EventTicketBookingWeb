@@ -1,6 +1,6 @@
 package org.fed333.ticket.booking.app.repository.impl;
 
-import org.fed333.ticket.booking.app.model.Ticket;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;

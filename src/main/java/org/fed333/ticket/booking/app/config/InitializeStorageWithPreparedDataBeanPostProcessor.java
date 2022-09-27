@@ -6,25 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.model.entity.Event;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
+import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.util.StorageDataUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
