@@ -36,6 +36,10 @@ public class TicketService {
         saveTicketValidator.setRepository(ticketRepository);
     }
 
+    public Ticket getById(Long ticketId) {
+        return ticketRepository.getById(ticketId);
+    }
+
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         User user = userRepository.getById(userId);
         Event event = eventRepository.getById(eventId);
