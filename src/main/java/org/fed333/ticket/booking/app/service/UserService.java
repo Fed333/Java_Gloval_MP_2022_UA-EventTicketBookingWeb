@@ -9,9 +9,11 @@ import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.util.PageUtil;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,11 +31,11 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     public User getUserByEmail(String email) {
-        List<User> users = userRepository.getAllByEmail(email);
+        List<User> users = userRepository.findAllByEmail(email);
         if (users.isEmpty()){
             log.info("No user with email {} was found.", email);
             return null;
@@ -44,8 +46,8 @@ public class UserService {
         return users.get(0);
     }
 
-    public List<User> getUsersByName(String name, PageUtil page) {
-        return userRepository.getAllByName(name, page.getOffset(), page.getSize());
+    public List<User> getUsersByName(String name, Pageable page) {
+        return userRepository.findAllByName(name, page);
     }
 
     public User createUser(User user) {
@@ -70,8 +72,10 @@ public class UserService {
     }
 
     public boolean deleteUser(long userId) {
-        User removed = userRepository.remove(userId);
-        if (Objects.nonNull(removed)) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(userId);
+            User removed = optionalUser.get();
             log.info("User {} was deleted successfully.", removed);
             return true;
         }

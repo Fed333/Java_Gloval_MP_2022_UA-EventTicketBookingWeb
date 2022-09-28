@@ -11,24 +11,24 @@ import java.util.List;
 
 @Repository
 
-public class UserRepositoryImpl extends AbstractHibernateDao<User, Long> implements UserRepository {
+public class UserRepositoryImpl extends AbstractHibernateDao<User, Long> {
 
-    @Override
-    public List<User> getAllByName(String name) {
-        return getAllByName(name, -1, -1);
-    }
-
-    @Override
-    public List<User> getAllByName(String name, int offset, int size) {
-        DetachedCriteria detachedCriteria = getDetachedCriteria();
-        detachedCriteria.add(Restrictions.eq("name", name));
-        return findByCriteria(detachedCriteria, offset, size);
-    }
-
-    @Override
-    public List<User> getAllByEmail(String email) {
-        DetachedCriteria detachedCriteria = getDetachedCriteria();
-        detachedCriteria.add(Restrictions.eq("email", email));
-        return findByCriteria(detachedCriteria);
-    }
+//    @Override
+//    public List<User> findAllByName(String name) {
+//        return findAllByName(name, -1, -1);
+//    }
+//
+//    @Override
+//    public List<User> findAllByName(String name, int offset, int size) {
+//        DetachedCriteria detachedCriteria = getDetachedCriteria();
+//        detachedCriteria.add(Restrictions.eq("name", name));
+//        return findByCriteria(detachedCriteria, offset, size);
+//    }
+//
+//    @Override
+//    public List<User> findAllByEmail(String email) {
+//        DetachedCriteria detachedCriteria = getDetachedCriteria();
+//        detachedCriteria.add(Restrictions.eq("email", email));
+//        return findByCriteria(detachedCriteria);
+//    }
 }

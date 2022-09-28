@@ -7,10 +7,11 @@ import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.util.PageUtil;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,15 +27,15 @@ public class EventService {
     }
 
     public Event getEventById(Long id) {
-        return eventRepository.getById(id);
+        return eventRepository.findById(id).orElse(null);
     }
 
-    public List<Event> getEventsByTitle(String title, PageUtil page) {
-        return eventRepository.getAllByTitle(title, page.getOffset(), page.getSize());
+    public List<Event> findAllByTitle(String title, Pageable page) {
+        return eventRepository.findAllByTitle(title, page);
     }
 
-    public List<Event> getEventsForDay(Date day, PageUtil page) {
-        return eventRepository.getAllByDay(day, page.getOffset(), page.getSize());
+    public List<Event> getEventsForDay(Date day, Pageable page) {
+        return eventRepository.findAllByDay(day, page);
     }
 
     public Event createEvent(Event event) {
@@ -52,9 +53,10 @@ public class EventService {
     }
 
     public boolean deleteEvent(long eventId) {
-        Event removed = eventRepository.remove(eventId);
-        if (Objects.nonNull(removed)) {
-            log.info("Event {} was deleted successfully.", removed);
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        if (optionalEvent.isPresent()){
+            eventRepository.deleteById(eventId);
+            log.info("Event {} was deleted successfully.", optionalEvent.get());
             return true;
         }
         return false;
