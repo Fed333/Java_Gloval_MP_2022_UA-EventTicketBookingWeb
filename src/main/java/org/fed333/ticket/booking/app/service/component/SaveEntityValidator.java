@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Identifiable;
 import org.fed333.ticket.booking.app.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -13,7 +14,7 @@ import static java.util.Objects.nonNull;
 public class SaveEntityValidator<E extends Identifiable<ID>, ID> {
 
     @Setter
-    private CrudRepository<E, ID> repository;
+    private JpaRepository<E, ID> repository;
 
     /**
      * Validates if the entity object can be inserted.

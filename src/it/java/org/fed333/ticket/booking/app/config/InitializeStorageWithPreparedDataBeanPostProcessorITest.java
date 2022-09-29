@@ -62,14 +62,14 @@ public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
 
     @Test
     public void eventRepository_shouldBePreInitializedWithJSON() {
-        assertThat(eventRepository.getAll())
+        assertThat(eventRepository.findAll())
                 .usingComparatorForType(eventComparator, Event.class)
                 .isEqualTo(testStorage.getTestEvents().values());
     }
 
     @Test
     public void userRepository_shouldBePreInitializedWithJSON() {
-        List<User> all = userRepository.getAll();
+        List<User> all = userRepository.findAll();
         all.sort(Comparator.comparing(User::getId));
         assertThat(all)
                 .usingComparatorForType(userComparator, User.class)
@@ -78,7 +78,7 @@ public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
     }
     @Test
     public void ticketRepository_shouldBePreInitializedWithJSON() {
-        assertThat(ticketRepository.getAll())
+        assertThat(ticketRepository.findAll())
                 .usingComparatorForType(ticketComparator, Ticket.class)
                 .isEqualTo(testStorage.getTestTickets().values());
     }
