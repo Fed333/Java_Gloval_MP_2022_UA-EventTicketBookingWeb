@@ -113,6 +113,35 @@
             <version>${spring.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.3.1</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <finalName>EventBooking</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>5.2.4</version>
+                    <configuration>
+                        <user>postgres</user>
+                        <password>Way_0804</password>
+                        <url>jdbc:postgresql://localhost/ticket_booking</url>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
 
 </project>

@@ -1,22 +1,38 @@
 package org.fed333.ticket.booking.app.repository;
 
 import org.fed333.ticket.booking.app.model.Event;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
+@Repository
+public interface EventRepository extends JpaRepository<Event, Long> {
 
-public interface EventRepository extends CrudRepository<Event, Long>{
+    List<Event> findAllByTitle(String title);
 
-    List<Event> getAllByTitle(String title);
+    List<Event> findAllByTitle(String title, Pageable pageable);
 
-    List<Event> getAllByTitle(String title, int offset, int size);
+    List<Event> findAllByDate(Date date);
 
-    List<Event> getAllByDate(Date day);
+    @Query(value = "SELECT * FROM event " +
+            "WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(DAY FROM date) = EXTRACT(DAY FROM CAST(:day AS TIMESTAMP))", nativeQuery = true)
+    List<Event> findAllByDay(@Param("day") Date day);
 
-    List<Event> getAllByDay(Date day);
-
-    List<Event> getAllByDay(Date day, int offset, int size);
+    @Query(value = "SELECT * FROM event e " +
+            "WHERE EXTRACT(YEAR FROM e.date) = EXTRACT(YEAR FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(MONTH FROM e.date) = EXTRACT(MONTH FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(DAY FROM e.date) = EXTRACT(DAY FROM CAST(:day AS TIMESTAMP))", nativeQuery = true)
+    List<Event> findAllByDay(@Param("day") Date day, Pageable pageable);
 
 }
