@@ -7,7 +7,6 @@ import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.util.PageUtil;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
 import org.fed333.ticket.booking.app.utils.TestingDataUtils;
 import org.junit.Before;

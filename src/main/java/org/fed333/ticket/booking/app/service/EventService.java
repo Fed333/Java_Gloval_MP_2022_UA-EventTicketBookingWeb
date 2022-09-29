@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.util.PageUtil;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
