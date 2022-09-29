@@ -8,7 +8,7 @@ import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
 import org.fed333.ticket.booking.app.service.UserService;
 import org.fed333.ticket.booking.app.utils.TestingDataUtils;
-import org.hibernate.SessionFactory;
+import org.hibernate.Session;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
 import org.junit.After;
@@ -21,6 +21,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,7 +34,10 @@ public class EhCacheHibernateITest {
     private Statistics statistics;
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private EntityManager entityManager;
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     private EventService eventService;
@@ -44,7 +50,9 @@ public class EhCacheHibernateITest {
 
     @Before
     public void setUp() {
-        statistics = sessionFactory.getStatistics();
+
+        Session session = entityManager.unwrap(Session.class);
+        statistics = session.getSessionFactory().getStatistics();
         statistics.clear();
     }
 
@@ -68,7 +76,6 @@ public class EhCacheHibernateITest {
         EntityStatistics eventStatistics = statistics.getEntityStatistics(Event.class.getCanonicalName());
         long actualHitCount = eventStatistics.getCacheHitCount();
         long actualMissCount = eventStatistics.getCacheMissCount();
-
         assertThat(actualHitCount).isEqualTo(expectedHitCount);
         assertThat(actualMissCount).isEqualTo(expectedMissCount);
     }
