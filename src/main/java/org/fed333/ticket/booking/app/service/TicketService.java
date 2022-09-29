@@ -12,11 +12,10 @@ import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
 import org.fed333.ticket.booking.app.util.PageUtil;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -42,8 +41,8 @@ public class TicketService {
     }
 
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        User user = userRepository.findById(userId).orElse(null);
-        Event event = eventRepository.findById(eventId).orElse(null);
+        User user = userRepository.getById(userId);
+        Event event = eventRepository.getById(eventId);
 
         if (Objects.isNull(user)) {
             throw new RuntimeException("No found user with id " + userId + " to create a ticket.");
@@ -69,16 +68,16 @@ public class TicketService {
         return ticket;
     }
 
-    public List<Ticket> getBookedTickets(User user, Pageable page) {
-        return ticketRepository.findAllByUserId(user.getId(), page);
+    public List<Ticket> getBookedTickets(User user, PageUtil page) {
+        return ticketRepository.getAllByUserId(user.getId(), page.getOffset(), page.getSize());
     }
 
-    public List<Ticket> getBookedTickets(Event event, Pageable page) {
-        return ticketRepository.findAllByEventId(event.getId(), page);
+    public List<Ticket> getBookedTickets(Event event, PageUtil page) {
+        return ticketRepository.getAllByEventId(event.getId(), page.getOffset(), page.getSize());
     }
 
     public boolean cancelTicket(long ticketId) {
-        Ticket ticketToCancel = ticketRepository.findById(ticketId).orElseThrow(NoSuchElementException::new);
+        Ticket ticketToCancel = ticketRepository.getById(ticketId);
         ticketToCancel.setCancelled(true);
         ticketRepository.save(ticketToCancel);
         return ticketToCancel.isCancelled();

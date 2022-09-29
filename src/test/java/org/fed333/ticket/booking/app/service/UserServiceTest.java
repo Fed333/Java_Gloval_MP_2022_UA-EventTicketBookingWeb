@@ -12,16 +12,19 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Pageable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.TestingDataUtils.createTestUser;
 import static org.fed333.ticket.booking.app.utils.TestingDataUtils.createTestUserWithName;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -55,7 +58,7 @@ public class UserServiceTest {
     @Test
     public void getUserById_shouldReturnFromRepository() {
         Long id = testUser.getId();
-        when(mockedRepository.findById(id)).thenReturn(Optional.of(testUser));
+        when(mockedRepository.getById(id)).thenReturn(testUser);
 
         assertThat(userService.getUserById(id)).isEqualTo(testUser);
     }
@@ -63,7 +66,7 @@ public class UserServiceTest {
     @Test
     public void getUserByEmail_shouldReturnFromRepository() {
         String email = testUser.getEmail();
-        when(mockedRepository.findAllByEmail(email)).thenReturn(Collections.singletonList(testUser));
+        when(mockedRepository.getAllByEmail(email)).thenReturn(Collections.singletonList(testUser));
 
         assertThat(userService.getUserByEmail(email)).isEqualTo(testUser);
     }
@@ -71,7 +74,7 @@ public class UserServiceTest {
     @Test
     public void getUserByEmail_ifMissingShouldReturnNull() {
         String email = testUser.getEmail();
-        when(mockedRepository.findAllByEmail(email)).thenReturn(new ArrayList<>());
+        when(mockedRepository.getAllByEmail(email)).thenReturn(new ArrayList<>());
 
         assertThat(userService.getUserByEmail(email)).isEqualTo(null);
     }
@@ -79,7 +82,7 @@ public class UserServiceTest {
     @Test(expected = RuntimeException.class)
     public void getUserByEmail_ifMoreThanOneUserFoundShouldThrowException() {
         String email = testUser.getEmail();
-        when(mockedRepository.findAllByEmail(email)).thenReturn(Arrays.asList(createTestUser(1L), createTestUser(2L)));
+        when(mockedRepository.getAllByEmail(email)).thenReturn(Arrays.asList(createTestUser(1L), createTestUser(2L)));
 
         assertThat(userService.getUserByEmail(email)).isEqualTo(null);
     }
@@ -88,10 +91,9 @@ public class UserServiceTest {
     public void getUsersByName_shouldReturnFromRepository() {
         String testName = "testName";
         int cursor = 1, size = 5;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
-
+        PageUtil page = new PageUtil(cursor, size);
         List<User> testUsers = Stream.iterate(1L, i -> i + 1).limit(size).map(i -> createTestUserWithName(i, testName)).collect(Collectors.toList());
-        when(mockedRepository.findAllByName(testName,page)).thenReturn(testUsers);
+        when(mockedRepository.getAllByName(testName, page.getOffset(), page.getSize())).thenReturn(testUsers);
 
         assertThat(userService.getUsersByName(testName, page)).usingElementComparator(userComparator).isEqualTo(testUsers);
     }
@@ -126,17 +128,14 @@ public class UserServiceTest {
 
     @Test
     public void deleteUser_shouldInvokeRepository() {
-        when(mockedRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
         userService.deleteUser(testUser.getId());
 
-        verify(mockedRepository).deleteById(testUser.getId());
+        verify(mockedRepository).remove(testUser.getId());
     }
 
     @Test
     public void deleteUser_ifUserDeletedShouldReturnTrue() {
-        doNothing().when(mockedRepository).deleteById(testUser.getId());
-        when(mockedRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-
+        when(mockedRepository.remove(testUser.getId())).thenReturn(testUser);
         boolean actual = userService.deleteUser(testUser.getId());
 
         assertThat(actual).isTrue();

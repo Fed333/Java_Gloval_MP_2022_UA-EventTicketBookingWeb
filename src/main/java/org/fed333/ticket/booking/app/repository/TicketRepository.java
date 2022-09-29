@@ -1,29 +1,20 @@
 package org.fed333.ticket.booking.app.repository;
 
 import org.fed333.ticket.booking.app.model.Ticket;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    @Query(value = "SELECT * FROM ticket t WHERE t.event_id = :eventId", nativeQuery = true)
-    List<Ticket> findAllByEventId(@Param("eventId") Long eventId);
+public interface TicketRepository extends CrudRepository<Ticket, Long>{
 
-    @Query(value = "SELECT * FROM ticket t WHERE t.event_id = :eventId", nativeQuery = true)
-    List<Ticket> findAllByEventId(@Param("eventId") Long eventId, Pageable pageable);
+    List<Ticket> getAllByEventId(Long eventId);
 
-    @Query(value = "SELECT * FROM ticket t WHERE t.user_id = :userId", nativeQuery = true)
-    List<Ticket> findAllByUserId(@Param("userId") Long userId);
+    List<Ticket> getAllByEventId(Long eventId, int offset, int size);
 
-    @Query(value = "SELECT * FROM ticket t WHERE t.user_id = :userId", nativeQuery = true)
-    List<Ticket> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
+    List<Ticket> getAllByUserId(Long userId);
 
-    @Query(value = "SELECT * FROM ticket t WHERE t.user_id = :userId AND t.event_id = :eventId", nativeQuery = true)
-    Ticket findByUserIdAndEventId(@Param("userId") Long userId, @Param("eventId") Long eventId);
+    List<Ticket> getAllByUserId(Long userId, int offset, int size);
+
+    Ticket getByUserIdAndEventId(Long userId, Long eventId);
 }

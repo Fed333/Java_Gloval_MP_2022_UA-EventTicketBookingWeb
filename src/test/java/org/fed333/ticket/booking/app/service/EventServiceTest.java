@@ -12,12 +12,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +57,7 @@ public class EventServiceTest {
     @Test
     public void getEventById_shouldReturnEvent() {
         Long id = testEvent.getId();
-        when(mockedRepository.findById(id)).thenReturn(Optional.of(testEvent));
+        when(mockedRepository.getById(id)).thenReturn(testEvent);
 
         assertThat(eventService.getEventById(id)).isEqualTo(testEvent);
     }
@@ -68,20 +66,20 @@ public class EventServiceTest {
     public void getEventsByTitle_shouldReturnSubList() {
         String title = testEvent.getTitle();
         int cursor = 2, size = 4;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
+        PageUtil page = new PageUtil(cursor, size);
         List<Event> expectedList = Stream.iterate(5L, s -> s + 1).limit(4).map(this::createTestEvent).collect(Collectors.toList());
-        when(mockedRepository.findAllByTitle(title, page)).thenReturn(expectedList);
+        when(mockedRepository.getAllByTitle(title, page.getOffset(), page.getSize())).thenReturn(expectedList);
 
-        assertThat(new ArrayList<>(eventService.findAllByTitle(title, page))).usingComparatorForType(eventEqualityComparator, Event.class).isEqualTo(expectedList);
+        assertThat(new ArrayList<>(eventService.getEventsByTitle(title, page))).usingComparatorForType(eventEqualityComparator, Event.class).isEqualTo(expectedList);
     }
 
     @Test
     public void getEventsForDay_shouldReturnSubList() {
         Date date = parseDate("17-09-2022");
         int cursor = 2, size = 4;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
+        PageUtil page = new PageUtil(cursor, size);
         List<Event> expectedList = Stream.iterate(5L, s -> s + 1).limit(4).map(this::createTestEvent).collect(Collectors.toList());
-        when(mockedRepository.findAllByDay(date, page)).thenReturn(expectedList);
+        when(mockedRepository.getAllByDay(date, page.getOffset(), page.getSize())).thenReturn(expectedList);
 
         assertThat(eventService.getEventsForDay(date, page)).usingElementComparator(eventEqualityComparator).isEqualTo(expectedList);
     }
@@ -116,11 +114,9 @@ public class EventServiceTest {
 
     @Test
     public void deleteEvent_shouldInvokeRepository() {
-        when(mockedRepository.findById(testEvent.getId())).thenReturn(Optional.of(testEvent));
-
         eventService.deleteEvent(testEvent.getId());
 
-        verify(mockedRepository).deleteById(testEvent.getId());
+        verify(mockedRepository).remove(testEvent.getId());
     }
 
     private Event createTestEvent(Long id) {

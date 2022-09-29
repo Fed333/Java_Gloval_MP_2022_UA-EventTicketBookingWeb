@@ -6,11 +6,12 @@ import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
 import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
 import org.fed333.ticket.booking.app.service.UserAccountService;
 import org.fed333.ticket.booking.app.service.UserService;
-import org.springframework.data.domain.Pageable;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -33,12 +34,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.findAllByTitle(title, Pageable.ofSize(pageSize).withPage(pageNum - 1));
+        return eventService.getEventsByTitle(title, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return eventService.getEventsForDay(day, Pageable.ofSize(pageSize).withPage(pageNum - 1));
+        return eventService.getEventsForDay(day, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -68,7 +69,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return userService.getUsersByName(name, Pageable.ofSize(pageSize).withPage(pageNum - 1));
+        return userService.getUsersByName(name, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -93,12 +94,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(user, Pageable.ofSize(pageSize).withPage(pageNum - 1));
+        return ticketService.getBookedTickets(user, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(event, Pageable.ofSize(pageSize).withPage(pageNum - 1));
+        return ticketService.getBookedTickets(event, new PageUtil(pageNum, pageSize));
     }
 
     @Override

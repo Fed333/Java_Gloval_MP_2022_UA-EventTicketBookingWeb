@@ -17,10 +17,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,7 +66,7 @@ public class TicketServiceTest {
     @Test(expected = RuntimeException.class)
     public void bookTicket_ifUserNotExistsShouldThrowException() {
         long userId = 1L, eventId = 2L;
-        when(mockedUserRepository.findById(userId)).thenReturn(Optional.of(createTestUser(userId)));
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
 
         ticketService.bookTicket(userId, eventId, 3, Ticket.Category.STANDARD);
     }
@@ -76,8 +74,8 @@ public class TicketServiceTest {
     @Test(expected = RuntimeException.class)
     public void bookTicket_ifEventNotExistsShouldThrowException() {
         long userId = 1L, eventId = 2L;
-        when(mockedUserRepository.findById(userId)).thenReturn(Optional.of(createTestUser(userId)));
-        when(mockedEventRepository.findById(eventId)).thenReturn(null);
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
+        when(mockedEventRepository.getById(eventId)).thenReturn(null);
 
         ticketService.bookTicket(userId, eventId, 3, Ticket.Category.STANDARD);
     }
@@ -86,8 +84,8 @@ public class TicketServiceTest {
     public void bookTicket_ifOkShouldInvokeRepository() {
         long userId = 1L, eventId = 2L;
         int place = 3;
-        when(mockedUserRepository.findById(userId)).thenReturn(Optional.of(createTestUser(userId)));
-        when(mockedEventRepository.findById(eventId)).thenReturn(Optional.of(createTestEvent(eventId)));
+        when(mockedUserRepository.getById(userId)).thenReturn(createTestUser(userId));
+        when(mockedEventRepository.getById(eventId)).thenReturn(createTestEvent(eventId));
         Ticket expectedTicket = Ticket.builder()
                 .user(User.builder().id(userId).build())
                 .event(Event.builder().id(eventId).build())
@@ -104,9 +102,9 @@ public class TicketServiceTest {
     @Test
     public void getBookedTicketsByUser_shouldReturnTickets() {
         int cursor = 1, size = 5;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
+        PageUtil page = new PageUtil(cursor, size);
         List<Ticket> expectedTickets = Stream.iterate(1L, i -> i + 1).limit(5).map(TestingDataUtils::createTestTicket).collect(Collectors.toList());
-        when(mockedTicketRepository.findAllByUserId(testUser.getId(), page)).thenReturn(expectedTickets);
+        when(mockedTicketRepository.getAllByUserId(testUser.getId(), page.getOffset(), page.getSize())).thenReturn(expectedTickets);
 
         List<Ticket> actualTickets = ticketService.getBookedTickets(testUser, page);
 
@@ -116,20 +114,19 @@ public class TicketServiceTest {
     @Test
     public void getBookedTicketsByUser_shouldInvokeRepository() {
         int cursor = 1, size = 5;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
-
+        PageUtil page = new PageUtil(cursor, size);
 
         ticketService.getBookedTickets(testUser, page);
 
-        verify(mockedTicketRepository).findAllByUserId(testUser.getId(), page);
+        verify(mockedTicketRepository).getAllByUserId(testUser.getId(), page.getOffset(), page.getSize());
     }
 
     @Test
     public void getBookedTicketsByEvent_shouldReturnTickets() {
         int cursor = 1, size = 5;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
+        PageUtil page = new PageUtil(cursor, size);
         List<Ticket> expectedTickets = Stream.iterate(1L, i -> i + 1).limit(5).map(TestingDataUtils::createTestTicket).collect(Collectors.toList());
-        when(mockedTicketRepository.findAllByEventId(testEvent.getId(), page)).thenReturn(expectedTickets);
+        when(mockedTicketRepository.getAllByEventId(testEvent.getId(), page.getOffset(), page.getSize())).thenReturn(expectedTickets);
 
         List<Ticket> actualTickets = ticketService.getBookedTickets(testEvent, page);
 
@@ -139,20 +136,20 @@ public class TicketServiceTest {
     @Test
     public void getBookedTicketsByEvent_shouldInvokeRepository() {
         int cursor = 1, size = 5;
-        Pageable page = Pageable.ofSize(size).withPage(cursor);
+        PageUtil page = new PageUtil(cursor, size);
         List<Ticket> expectedTickets = Stream.iterate(1L, i -> i + 1).limit(5).map(TestingDataUtils::createTestTicket).collect(Collectors.toList());
-        when(mockedTicketRepository.findAllByEventId(testEvent.getId(), page)).thenReturn(expectedTickets);
+        when(mockedTicketRepository.getAllByEventId(testEvent.getId(), page.getOffset(), page.getSize())).thenReturn(expectedTickets);
 
         ticketService.getBookedTickets(testEvent, page);
 
-        verify(mockedTicketRepository).findAllByEventId(testEvent.getId(), page);
+        verify(mockedTicketRepository).getAllByEventId(testEvent.getId(), page.getOffset(), page.getSize());
     }
 
     @Test
     public void cancelTicket_shouldCancel() {
         long ticketId = 1L;
         Ticket testTicket = createTestTicket(ticketId);
-        when(mockedTicketRepository.findById(ticketId)).thenReturn(Optional.of(testTicket));
+        when(mockedTicketRepository.getById(ticketId)).thenReturn(testTicket);
 
         ticketService.cancelTicket(ticketId);
 
