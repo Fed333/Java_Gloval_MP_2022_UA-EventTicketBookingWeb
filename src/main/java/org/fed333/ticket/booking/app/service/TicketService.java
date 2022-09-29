@@ -11,7 +11,6 @@ import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.util.PageUtil;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -35,6 +34,10 @@ public class TicketService {
 
     private void init() {
         saveTicketValidator.setRepository(ticketRepository);
+    }
+
+    public Ticket getById(Long ticketId) {
+        return ticketRepository.findById(ticketId).orElse(null);
     }
 
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
