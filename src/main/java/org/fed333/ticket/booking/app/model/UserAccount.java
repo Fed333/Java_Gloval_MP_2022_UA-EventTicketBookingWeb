@@ -6,30 +6,22 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-/**
- * Entity User implementation.
- * @author Roman_Kovalchuk
- * */
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "user_account")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User implements Identifiable<Long> {
+public class UserAccount implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    private String email;
-
-    @OneToOne(targetEntity = UserAccount.class)
-    private UserAccount account;
+    @Column(name = "money")
+    private Double money;
 
 }

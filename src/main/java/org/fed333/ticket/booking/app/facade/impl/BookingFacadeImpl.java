@@ -5,9 +5,13 @@ import org.fed333.ticket.booking.app.facade.BookingFacade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.service.EventService;
 import org.fed333.ticket.booking.app.service.TicketService;
+import org.fed333.ticket.booking.app.service.UserAccountService;
 import org.fed333.ticket.booking.app.service.UserService;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +25,8 @@ public class BookingFacadeImpl implements BookingFacade {
 
     private final TicketService ticketService;
 
+    private final UserAccountService accountService;
+
     @Override
     public Event getEventById(long eventId) {
         return eventService.getEventById(eventId);
@@ -28,12 +34,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.getEventsByTitle(title, pageSize, pageNum);
+        return eventService.getEventsByTitle(title, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return eventService.getEventsForDay(day, pageSize, pageNum);
+        return eventService.getEventsForDay(day, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -63,7 +69,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return userService.getUsersByName(name, pageSize, pageNum);
+        return userService.getUsersByName(name, new PageUtil(pageNum, pageSize));
     }
 
     @Override
@@ -88,16 +94,22 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(user, pageSize, pageNum);
+        return ticketService.getBookedTickets(user, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(event, pageSize, pageNum);
+        return ticketService.getBookedTickets(event, new PageUtil(pageNum, pageSize));
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
         return ticketService.cancelTicket(ticketId);
     }
+
+    @Override
+    public UserAccount refillAccount(UserAccount account, double money) {
+        return accountService.refillAccount(account, money);
+    }
+
 }

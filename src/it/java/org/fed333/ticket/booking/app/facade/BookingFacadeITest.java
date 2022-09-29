@@ -3,7 +3,6 @@ package org.fed333.ticket.booking.app.facade;
 import org.fed333.ticket.booking.app.model.Event;
 import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.model.User;
-import org.fed333.ticket.booking.app.model.Ticket;
 import org.fed333.ticket.booking.app.util.TestStorageUtil;
 import org.fed333.ticket.booking.app.util.comparator.EventEqualityComparator;
 import org.fed333.ticket.booking.app.util.comparator.TicketEqualityComparator;
@@ -23,6 +22,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.DateUtils.parseDate;
+import static org.fed333.ticket.booking.app.utils.DateUtils.parseDateTime;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,6 +47,7 @@ public class BookingFacadeITest {
 
     @Before
     public void setUp() {
+
         TestStorageUtil testStorageUtil = new TestStorageUtil();
         testUsers = testStorageUtil.getTestUsers();
         testEvents = testStorageUtil.getTestEvents();
@@ -64,22 +65,22 @@ public class BookingFacadeITest {
 
         Event createdEvent = facade.createEvent(testEvent);
         assertThat(createdEvent.getId()).isNotNull();
-        assertThat(facade.getEventById(createdEvent.getId())).isEqualTo(createdEvent);
+        assertThat(facade.getEventById(createdEvent.getId())).usingComparator(eventComparator).isEqualTo(createdEvent);
 
         User createdUser = facade.createUser(testUser);
         assertThat(createdUser.getId()).isNotNull();
-        assertThat(facade.getUserById(createdUser.getId())).isEqualTo(createdUser);
+        assertThat(facade.getUserById(createdUser.getId())).usingComparator(userComparator).isEqualTo(createdUser);
 
         Ticket createdTicket = facade.bookTicket(createdUser.getId(), createdEvent.getId(), 1, Ticket.Category.PREMIUM);
         assertThat(createdTicket.getId()).isNotNull();
 
         List<Ticket> bookedTicketsByUser = facade.getBookedTickets(createdUser, 1, 1);
         assertThat(bookedTicketsByUser).isNotEmpty();
-        assertThat(bookedTicketsByUser.get(0)).isEqualTo(createdTicket);
+        assertThat(bookedTicketsByUser.get(0)).usingComparator(ticketComparator).isEqualTo(createdTicket);
 
         List<Ticket> bookedTicketsByEvent = facade.getBookedTickets(createdEvent, 1, 1);
         assertThat(bookedTicketsByEvent).isNotEmpty();
-        assertThat(bookedTicketsByEvent.get(0)).isEqualTo(createdTicket);
+        assertThat(bookedTicketsByEvent.get(0)).usingComparator(ticketComparator).isEqualTo(createdTicket);
 
         boolean cancelled = facade.cancelTicket(createdTicket.getId());
         assertThat(cancelled).isTrue();
@@ -120,8 +121,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnAll() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Arrays.asList(testEvents.get(1L), testEvents.get(2L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Arrays.asList(testEvents.get(7L), testEvents.get(8L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 2, 1);
 
@@ -130,8 +131,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnPage1() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Collections.singletonList(testEvents.get(1L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Collections.singletonList(testEvents.get(7L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 1, 1);
 
@@ -140,8 +141,8 @@ public class BookingFacadeITest {
 
     @Test
     public void getEventsForDay_shouldReturnPage2() {
-        Date testDay = parseDate("05-09-2022");
-        List<Event> expected = Collections.singletonList(testEvents.get(2L));
+        Date testDay = parseDate("25-09-2022");
+        List<Event> expected = Collections.singletonList(testEvents.get(8L));
 
         List<Event> actual = facade.getEventsForDay(testDay, 1, 2);
 
@@ -171,7 +172,7 @@ public class BookingFacadeITest {
     public void updateEvent_shouldChangeData() {
         Event testEvent = testEvents.get(3L);
         testEvent.setTitle("Kalush charity music \"STEFANIA\" concert.");
-        testEvent.setDate(parseDate("2022-09-06 17:45:00"));
+        testEvent.setDate(parseDateTime("2022-09-06 17:45:00"));
 
         facade.updateEvent(testEvent);
         Event actualEvent = facade.getEventById(testEvent.getId());
@@ -255,14 +256,6 @@ public class BookingFacadeITest {
     }
 
     @Test
-    public void updateUser() {
-    }
-
-    @Test
-    public void deleteUser() {
-    }
-
-    @Test
     public void updateUser_shouldChangeData() {
         User testUser = testUsers.get(15L);
         testUser.setName("Changed");
@@ -275,7 +268,7 @@ public class BookingFacadeITest {
     }
 
     @Test
-    public void deleteUser_shouldRemoveEvent() {
+    public void deleteUser_shouldRemoveUser() {
         User testUser = testUsers.get(16L);
 
         boolean deleted = facade.deleteUser(testUser.getId());
@@ -286,13 +279,13 @@ public class BookingFacadeITest {
 
     @Test
     public void bookTicket_shouldCreateTicketWithId() {
-        User testUser = testUsers.get(16L);
+        User testUser = testUsers.get(13L);
         Event testEvent = testEvents.get(4L);
         int place = 3;
         Ticket.Category category = Ticket.Category.STANDARD;
         Ticket expectedTicket = Ticket.builder()
-                .userId(testUser.getId())
-                .eventId(testEvent.getId())
+                .user(testUser)
+                .event(testEvent)
                 .place(place)
                 .category(category).build();
 
@@ -301,6 +294,21 @@ public class BookingFacadeITest {
         assertThat(actualTicket.getId()).isNotNull();
         expectedTicket.setId(actualTicket.getId());
         assertThat(actualTicket).usingComparator(ticketComparator).isEqualTo(expectedTicket);
+    }
+
+    @Test
+    public void bookTicket_shouldWithdrawUserAccountMoney() {
+        User testUser = testUsers.get(14L);
+        Event testEvent = testEvents.get(5L);
+        int place = 3;
+        double expectedMoney = testUser.getAccount().getMoney() - testEvent.getTicketPrice();
+        Ticket.Category category = Ticket.Category.STANDARD;
+
+        facade.bookTicket(testUser.getId(), testEvent.getId(), place, category);
+        User actualUser = facade.getUserById(testUser.getId());
+
+        assertThat(actualUser.getAccount().getMoney()).isEqualTo(expectedMoney);
+
     }
 
     @Test
@@ -371,6 +379,11 @@ public class BookingFacadeITest {
 
         assertThat(cancelled).isTrue();
         assertThat(actualTicket.isCancelled()).isTrue();
+    }
+
+    @Test
+    public void refillAccount_shouldUpdateMoney() {
+
     }
 
 }

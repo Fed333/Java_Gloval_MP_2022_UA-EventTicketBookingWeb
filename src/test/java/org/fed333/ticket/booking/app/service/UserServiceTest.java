@@ -1,17 +1,17 @@
 package org.fed333.ticket.booking.app.service;
 
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 import org.fed333.ticket.booking.app.util.comparator.UserEqualityComparator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +23,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.TestingDataUtils.createTestUser;
 import static org.fed333.ticket.booking.app.utils.TestingDataUtils.createTestUserWithName;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +33,10 @@ public class UserServiceTest {
     private UserRepository mockedRepository;
 
     @Mock
-    private SlicePaginator mockedPaginator;
+    private UserAccountService accountService;
+
+    @Mock
+    private UserAccountRepository accountRepository;
 
     @Mock
     private SaveEntityValidator<User, Long> mockedValidator;
@@ -49,7 +50,6 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        userService.setPaginator(mockedPaginator);
         userService.setSaveUserValidator(mockedValidator);
         testUser = createTestUser(1L);
         userComparator = new UserEqualityComparator();
@@ -91,11 +91,11 @@ public class UserServiceTest {
     public void getUsersByName_shouldReturnFromRepository() {
         String testName = "testName";
         int cursor = 1, size = 5;
+        PageUtil page = new PageUtil(cursor, size);
         List<User> testUsers = Stream.iterate(1L, i -> i + 1).limit(size).map(i -> createTestUserWithName(i, testName)).collect(Collectors.toList());
-        when(mockedPaginator.paginateStream(any(), eq(cursor), eq(size))).thenAnswer(InvocationOnMock::callRealMethod);
-        when(mockedRepository.getAll()).thenReturn(testUsers);
+        when(mockedRepository.getAllByName(testName, page.getOffset(), page.getSize())).thenReturn(testUsers);
 
-        assertThat(userService.getUsersByName(testName, size, cursor)).usingElementComparator(userComparator).isEqualTo(testUsers);
+        assertThat(userService.getUsersByName(testName, page)).usingElementComparator(userComparator).isEqualTo(testUsers);
     }
 
     @Test

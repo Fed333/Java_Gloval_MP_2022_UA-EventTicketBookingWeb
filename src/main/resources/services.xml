@@ -28,9 +28,6 @@
           scope="prototype">
     </bean>
 
-    <bean id="slicePaginator"
-          class="org.fed333.ticket.booking.app.service.component.SlicePaginator"/>
-
     <bean id="eventRepository"
           class="org.fed333.ticket.booking.app.repository.impl.EventRepositoryImpl">
     </bean>
@@ -43,25 +40,30 @@
           class="org.fed333.ticket.booking.app.repository.impl.UserRepositoryImpl">
     </bean>
 
+    <bean id="userAccountRepository"
+          class="org.fed333.ticket.booking.app.repository.impl.UserAccountRepositoryImpl">
+    </bean>
+
     <bean id="userService"
           class="org.fed333.ticket.booking.app.service.UserService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveUserValidator" ref="saveEntityValidator"/>
     </bean>
 
     <bean id="ticketService"
           class="org.fed333.ticket.booking.app.service.TicketService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveTicketValidator" ref="saveEntityValidator"/>
     </bean>
 
     <bean id="eventService"
           class="org.fed333.ticket.booking.app.service.EventService"
           init-method="init">
-        <property name="paginator" ref="slicePaginator"/>
         <property name="saveEventValidator" ref="saveEntityValidator"/>
+    </bean>
+
+    <bean id="userAccountService"
+          class="org.fed333.ticket.booking.app.service.UserAccountService">
     </bean>
 
     <bean id="bookingFacade"
@@ -69,6 +71,7 @@
         <constructor-arg ref="userService"/>
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="ticketService"/>
+        <constructor-arg ref="userAccountService"/>
     </bean>
 
     <bean id="storage"
@@ -76,6 +79,7 @@
         <property name="eventRepository" ref="eventRepository"/>
         <property name="userRepository" ref="userRepository"/>
         <property name="ticketRepository" ref="ticketRepository"/>
+        <property name="accountRepository" ref="userAccountRepository"/>
     </bean>
 
 </beans>

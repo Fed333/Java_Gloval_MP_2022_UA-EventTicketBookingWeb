@@ -1,17 +1,17 @@
 package org.fed333.ticket.booking.app.service;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.UserAccount;
+import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
-import org.fed333.ticket.booking.app.service.component.SlicePaginator;
+import org.fed333.ticket.booking.app.util.PageUtil;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,8 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Setter
-    private SlicePaginator paginator;
+    private final UserAccountRepository accountRepository;
 
     @Setter
     private SaveEntityValidator<User, Long> saveUserValidator;
@@ -45,13 +44,20 @@ public class UserService {
         return users.get(0);
     }
 
-    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return paginator.paginateStream(userRepository.getAll().stream().filter(u->u.getName().contains(name)), pageNum, pageSize).collect(Collectors.toList());
+    public List<User> getUsersByName(String name, PageUtil page) {
+        return userRepository.getAllByName(name, page.getOffset(), page.getSize());
     }
 
     public User createUser(User user) {
         saveUserValidator.validateCreate(user);
+
+        UserAccount account = user.getAccount();
+        if (Objects.nonNull(account)) {
+            UserAccount savedAccount = accountRepository.save(account);
+            user.setAccount(savedAccount);
+        }
         User saved = userRepository.save(user);
+
         log.info("User {} has been created successfully.", saved);
         return saved;
     }

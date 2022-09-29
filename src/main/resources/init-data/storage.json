@@ -1,16 +1,18 @@
 {
   "events": [
-    {"id":  1, "title": "EPAM Townhall", "date": "2022-09-05 15:30:00"},
-    {"id":  2, "title": "VNTU openday", "date": "2022-09-05 11:20:00"},
-    {"id":  3, "title": "Kalush charity music concert", "date": "2022-09-06 18:45:00"},
-    {"id":  4, "title": "EPAM Townhall", "date": "2022-10-05 15:30:00"},
-    {"id":  5, "title": "EPAM Townhall", "date": "2022-11-05 15:30:00"},
-    {"id":  6, "title": "Event1 to be deleted", "date": "2022-12-05 15:30:00"}
+    {"id":  1, "title": "EPAM Townhall", "date": "2022-09-05 15:30:00", "ticketPrice":  20 },
+    {"id":  2, "title": "VNTU openday", "date": "2022-09-05 11:20:00", "ticketPrice":  20},
+    {"id":  3, "title": "Kalush charity music concert", "date": "2022-09-06 18:45:00", "ticketPrice":  3600},
+    {"id":  4, "title": "EPAM Townhall", "date": "2022-10-05 15:30:00", "ticketPrice":  20},
+    {"id":  5, "title": "EPAM Townhall", "date": "2022-11-05 15:30:00", "ticketPrice":  20},
+    {"id":  6, "title": "Event1 to be deleted", "date": "2022-12-05 15:30:00", "ticketPrice":  20},
+    {"id":  7, "title": "Jazz concert", "date": "2022-09-25 19:30:00", "ticketPrice":  20},
+    {"id":  8, "title": "Speaking club", "date": "2022-09-25 15:30:00", "ticketPrice":  20}
   ],
   "users": [
-    {"id": 1, "name":  "Roman", "email": "kovalchuk.roman03@gmail.com"},
-    {"id": 2, "name":  "Pips", "email": "mpostryk@gmail.com"},
-    {"id": 3, "name":  "Ivan", "email": "builbik@gmail.com"},
+    {"id": 1, "name":  "Roman", "email": "kovalchuk.roman03@gmail.com", "account" : {"id": 1, "money":  6500}},
+    {"id": 2, "name":  "Pips", "email": "mpostryk@gmail.com", "account": {"id": 2, "money": 4500}},
+    {"id": 3, "name":  "Ivan", "email": "builbik@gmail.com", "account":  {"id": 3, "money": 7500}},
     {"id": 4, "name":  "Kyrylo", "email": "kyrylo@gmail.com"},
     {"id": 5, "name":  "Ivan", "email": "vanno8782@gmail.com"},
     {"id": 6, "name":  "Serhiy", "email": "meizum@gmail.com"},
@@ -20,8 +22,8 @@
     {"id": 10, "name":  "Viktoria", "email": "viktoria@gmail.com"},
     {"id": 11, "name":  "Ivan", "email": "tocker342@gmail.com"},
     {"id": 12, "name":  "Mykhailo", "email": "mykhailo@gmail.com"},
-    {"id": 13, "name":  "Hlib", "email": "glego@gmail.com"},
-    {"id": 14, "name":  "Pavlo", "email": "pavlo_makushak@gmail.com"},
+    {"id": 13, "name":  "Hlib", "email": "glego@gmail.com", "account":  {"id": 4, "money": 2600}},
+    {"id": 14, "name":  "Pavlo", "email": "pavlo_makushak@gmail.com", "account":  {"id": 5, "money": 2500}},
     {"id": 15, "name":  "Updated", "email": "updated@gmail.com"},
     {"id": 16, "name":  "Deleted", "email": "deleted@gmail.com"}
   ],
