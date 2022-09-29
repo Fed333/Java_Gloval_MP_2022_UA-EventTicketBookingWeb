@@ -26,7 +26,7 @@ import static org.fed333.ticket.booking.app.utils.DateUtils.parseDateTime;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/resources/services.xml")
+@ContextConfiguration({"file:src/main/resources/services.xml", "file:src/it/resources/test-config.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class BookingFacadeITest {
 
