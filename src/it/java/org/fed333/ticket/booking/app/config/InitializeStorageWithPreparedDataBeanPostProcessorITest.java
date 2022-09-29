@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,8 +28,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"file:src/main/resources/services.xml", "file:src/it/resources/test-config.xml"})
+@ContextConfiguration({"file:src/main/resources/services.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
 
