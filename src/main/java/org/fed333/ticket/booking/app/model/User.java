@@ -1,8 +1,6 @@
 package org.fed333.ticket.booking.app.model;
 
 import lombok.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
@@ -17,8 +15,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Identifiable<Long> {
 
     @Id
