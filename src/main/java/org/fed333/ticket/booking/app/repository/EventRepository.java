@@ -20,19 +20,19 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByDate(Date date);
 
     @Query(value = "SELECT * FROM event " +
-            "WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM :day) " +
+            "WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CAST(:day AS TIMESTAMP)) " +
             "AND " +
-            "EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM :day) " +
-            "AND" +
-            "EXTRACT(DAY FROM date) = EXTRACT(DAY FROM :day)", nativeQuery = true)
+            "EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(DAY FROM date) = EXTRACT(DAY FROM CAST(:day AS TIMESTAMP))", nativeQuery = true)
     List<Event> findAllByDay(@Param("day") Date day);
 
-    @Query(value = "SELECT * FROM event " +
-            "WHERE EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM :day) " +
+    @Query(value = "SELECT * FROM event e " +
+            "WHERE EXTRACT(YEAR FROM e.date) = EXTRACT(YEAR FROM CAST(:day AS TIMESTAMP)) " +
             "AND " +
-            "EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM :day) " +
-            "AND" +
-            "EXTRACT(DAY FROM date) = EXTRACT(DAY FROM :day)", nativeQuery = true)
+            "EXTRACT(MONTH FROM e.date) = EXTRACT(MONTH FROM CAST(:day AS TIMESTAMP)) " +
+            "AND " +
+            "EXTRACT(DAY FROM e.date) = EXTRACT(DAY FROM CAST(:day AS TIMESTAMP))", nativeQuery = true)
     List<Event> findAllByDay(@Param("day") Date day, Pageable pageable);
 
 }

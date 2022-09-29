@@ -126,6 +126,7 @@ public class UserServiceTest {
 
     @Test
     public void deleteUser_shouldInvokeRepository() {
+        when(mockedRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
         userService.deleteUser(testUser.getId());
 
         verify(mockedRepository).deleteById(testUser.getId());
@@ -133,7 +134,8 @@ public class UserServiceTest {
 
     @Test
     public void deleteUser_ifUserDeletedShouldReturnTrue() {
-        doReturn(testUser).when(mockedRepository).deleteById(testUser.getId());
+        doNothing().when(mockedRepository).deleteById(testUser.getId());
+        when(mockedRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
 
         boolean actual = userService.deleteUser(testUser.getId());
 

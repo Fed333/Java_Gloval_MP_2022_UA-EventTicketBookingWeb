@@ -116,6 +116,8 @@ public class EventServiceTest {
 
     @Test
     public void deleteEvent_shouldInvokeRepository() {
+        when(mockedRepository.findById(testEvent.getId())).thenReturn(Optional.of(testEvent));
+
         eventService.deleteEvent(testEvent.getId());
 
         verify(mockedRepository).deleteById(testEvent.getId());
