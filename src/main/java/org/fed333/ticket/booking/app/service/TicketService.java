@@ -38,7 +38,7 @@ public class TicketService {
     }
 
     public Ticket getById(Long ticketId) {
-        return ticketRepository.getById(ticketId);
+        return ticketRepository.findById(ticketId).orElse(null);
     }
 
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
