@@ -36,9 +36,9 @@ public class StorageDataUtil {
     private void init() {
         log.info("StorageDataUtil init() method invoked!");
 
-        log.info("Total events: {}", eventRepository.getAll());
-        log.info("Total users: {}", userRepository.getAll());
-        log.info("Total repositories: {}", ticketRepository.getAll());
+        log.info("Total events: {}", eventRepository.findAll());
+        log.info("Total users: {}", userRepository.findAll());
+        log.info("Total repositories: {}", ticketRepository.findAll());
     }
 
 }

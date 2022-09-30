@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,8 +28,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/resources/services.xml")
+@ContextConfiguration({"file:src/main/resources/services.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
 
@@ -62,14 +64,14 @@ public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
 
     @Test
     public void eventRepository_shouldBePreInitializedWithJSON() {
-        assertThat(eventRepository.getAll())
+        assertThat(eventRepository.findAll())
                 .usingComparatorForType(eventComparator, Event.class)
                 .isEqualTo(testStorage.getTestEvents().values());
     }
 
     @Test
     public void userRepository_shouldBePreInitializedWithJSON() {
-        List<User> all = userRepository.getAll();
+        List<User> all = userRepository.findAll();
         all.sort(Comparator.comparing(User::getId));
         assertThat(all)
                 .usingComparatorForType(userComparator, User.class)
@@ -78,7 +80,7 @@ public class InitializeStorageWithPreparedDataBeanPostProcessorITest {
     }
     @Test
     public void ticketRepository_shouldBePreInitializedWithJSON() {
-        assertThat(ticketRepository.getAll())
+        assertThat(ticketRepository.findAll())
                 .usingComparatorForType(ticketComparator, Ticket.class)
                 .isEqualTo(testStorage.getTestTickets().values());
     }
