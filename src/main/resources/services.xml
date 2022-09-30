@@ -16,7 +16,8 @@
     <tx:annotation-driven/>
 
     <import resource="spring-data.xml"/>
-    
+    <import resource="test-data.xml"/>
+
     <bean class="org.fed333.ticket.booking.app.config.InitializeStorageWithPreparedDataBeanPostProcessor" p:storageSourceJson="${init.data.json.storage}"/>
 
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
