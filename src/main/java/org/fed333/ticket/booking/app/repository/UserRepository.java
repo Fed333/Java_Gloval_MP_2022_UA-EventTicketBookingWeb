@@ -1,17 +1,19 @@
 package org.fed333.ticket.booking.app.repository;
 
 import org.fed333.ticket.booking.app.model.User;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-public interface UserRepository extends CrudRepository<User, Long>{
+    List<User> findAllByName(String name);
 
-    List<User> getAllByName(String name);
+    List<User> findAllByName(String name, Pageable pageable);
 
-    List<User> getAllByName(String name, int offset, int size);
-
-    List<User> getAllByEmail(String email);
+    List<User> findAllByEmail(String email);
 
 }

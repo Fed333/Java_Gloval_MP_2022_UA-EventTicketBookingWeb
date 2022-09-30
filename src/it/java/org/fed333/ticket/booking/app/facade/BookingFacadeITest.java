@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,9 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.DateUtils.parseDate;
 import static org.fed333.ticket.booking.app.utils.DateUtils.parseDateTime;
 
-
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/resources/services.xml")
+@ContextConfiguration({"file:src/main/resources/services.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class BookingFacadeITest {
 

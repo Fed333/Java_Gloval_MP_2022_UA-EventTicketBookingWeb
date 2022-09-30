@@ -58,10 +58,10 @@ public class InitializeStorageWithPreparedDataBeanPostProcessor implements BeanP
                 log.info("users: {}", users);
                 log.info("tickets: {}", tickets);
 
-                storage.getEventRepository().save(events);
-                storage.getAccountRepository().save(users.stream().map(User::getAccount).filter(Objects::nonNull).collect(Collectors.toList()));
-                storage.getUserRepository().save(users);
-                storage.getTicketRepository().save(tickets);
+                storage.getEventRepository().saveAll(events);
+                storage.getAccountRepository().saveAll(users.stream().map(User::getAccount).filter(Objects::nonNull).collect(Collectors.toList()));
+                storage.getUserRepository().saveAll(users);
+                storage.getTicketRepository().saveAll(tickets);
 
 
                 log.info("Filling of the prepared data, has been completed!");
