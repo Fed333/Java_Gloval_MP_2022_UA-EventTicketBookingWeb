@@ -1,6 +1,6 @@
 package org.fed333.ticket.booking.app.service.component;
 
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.fed333.ticket.booking.app.model;
+package org.fed333.ticket.booking.app.model.entity;
 
 public interface Identifiable<ID> {
 

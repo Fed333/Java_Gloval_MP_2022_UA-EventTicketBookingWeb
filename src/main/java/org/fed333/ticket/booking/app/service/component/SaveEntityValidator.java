@@ -2,7 +2,7 @@ package org.fed333.ticket.booking.app.service.component;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.fed333.ticket.booking.app.model.Identifiable;
+import org.fed333.ticket.booking.app.model.entity.Identifiable;
 import org.fed333.ticket.booking.app.repository.CrudRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

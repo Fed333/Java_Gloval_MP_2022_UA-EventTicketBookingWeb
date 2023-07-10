@@ -1,8 +1,8 @@
 package org.fed333.ticket.booking.app.service;
 
-import org.fed333.ticket.booking.app.model.Event;
-import org.fed333.ticket.booking.app.model.Ticket;
-import org.fed333.ticket.booking.app.model.User;
+import org.fed333.ticket.booking.app.model.entity.Event;
+import org.fed333.ticket.booking.app.model.entity.Ticket;
+import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.repository.TicketRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
