@@ -3,6 +3,10 @@ package org.fed333.ticket.booking.app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.fed333.ticket.booking.app.exception.AlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.MissingIdValidationException;
+import org.fed333.ticket.booking.app.exception.event.EventAlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.event.EventMissingIdValidationException;
 import org.fed333.ticket.booking.app.model.entity.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
@@ -42,14 +46,26 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
-        saveEventValidator.validateCreate(event);
+        try {
+            saveEventValidator.validateCreate(event);
+        } catch (AlreadyExistsValidationException e) {
+            throw new EventAlreadyExistsValidationException(e);
+        }
+
         Event saved = eventRepository.save(event);
         log.info("Event {} has been created successfully.", saved);
         return saved;
     }
 
     public Event updateEvent(Event event) {
-        saveEventValidator.validateUpdate(event);
+        try {
+            saveEventValidator.validateUpdate(event);
+        } catch (MissingIdValidationException e) {
+            throw new EventMissingIdValidationException(e);
+        } catch (AlreadyExistsValidationException e) {
+            throw new EventAlreadyExistsValidationException(e);
+        }
+
         Event saved = eventRepository.save(event);
         log.info("Event {} has been updated successfully.", saved);
         return saved;

@@ -2,6 +2,8 @@ package org.fed333.ticket.booking.app.service.component;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.fed333.ticket.booking.app.exception.AlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.MissingIdValidationException;
 import org.fed333.ticket.booking.app.model.entity.Identifiable;
 import org.fed333.ticket.booking.app.repository.CrudRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,7 +25,7 @@ public class SaveEntityValidator<E extends Identifiable<ID>, ID> {
      * */
     public void validateCreate(E entity) {
         if (nonNull(entity.getId()) && repository.existsById(entity.getId())){
-            throw new RuntimeException("The " + entity.getClass().getName() + " object with id " + entity.getId() + " already exists");
+            throw new AlreadyExistsValidationException(entity.getClass().getName(), entity.getId().toString());
         }
         log.info("{} passed create validation.", entity);
     }
@@ -35,10 +37,10 @@ public class SaveEntityValidator<E extends Identifiable<ID>, ID> {
      * */
     public void validateUpdate(E entity) {
         if (isNull(entity.getId())){
-            throw new RuntimeException("The " + entity.getClass().getName() + " object must have an id.");
+            throw new MissingIdValidationException(entity.getClass().getName());
         }
         if (!repository.existsById(entity.getId())) {
-            throw new RuntimeException("The " + entity.getClass().getName() + " object with id " + entity.getId() + "is missing.");
+            throw new AlreadyExistsValidationException(entity.getClass().getName(), entity.getId().toString());
         }
         log.info(entity.getClass().getName() + " {} passed update validation.", entity);
     }

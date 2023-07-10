@@ -3,6 +3,7 @@ package org.fed333.ticket.booking.app.model.entity;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Event implements Identifiable<Long> {
     private String title;
 
     @Column(name = "date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @OneToMany(targetEntity = Ticket.class, mappedBy = "event", fetch = FetchType.LAZY)

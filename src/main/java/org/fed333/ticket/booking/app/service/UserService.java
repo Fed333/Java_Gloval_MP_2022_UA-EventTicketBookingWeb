@@ -3,6 +3,10 @@ package org.fed333.ticket.booking.app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.fed333.ticket.booking.app.exception.AlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.MissingIdValidationException;
+import org.fed333.ticket.booking.app.exception.user.UserAlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.user.UserMissingIdValidationException;
 import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.model.entity.UserAccount;
 import org.fed333.ticket.booking.app.repository.UserAccountRepository;
@@ -50,7 +54,11 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        saveUserValidator.validateCreate(user);
+        try {
+            saveUserValidator.validateCreate(user);
+        } catch (AlreadyExistsValidationException e) {
+            throw new UserAlreadyExistsValidationException(e);
+        }
 
         UserAccount account = user.getAccount();
         if (Objects.nonNull(account)) {
@@ -64,7 +72,14 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        saveUserValidator.validateUpdate(user);
+        try {
+            saveUserValidator.validateUpdate(user);
+        } catch (MissingIdValidationException e) {
+            throw new UserMissingIdValidationException(e);
+        } catch (AlreadyExistsValidationException e) {
+            throw new UserAlreadyExistsValidationException(e);
+        }
+
         User saved = userRepository.save(user);
         log.info("User {} has been updated successfully.", saved);
         return saved;

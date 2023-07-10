@@ -3,8 +3,10 @@ package org.fed333.ticket.booking.app.mapper;
 import org.fed333.ticket.booking.app.model.dto.TicketDto;
 import org.fed333.ticket.booking.app.model.entity.Ticket;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,7 @@ public class TicketMapper {
     }
 
     public List<TicketDto> toDtos(List<Ticket> tickets) {
-        return tickets.stream().map(this::map).collect(Collectors.toList());
+        return Optional.ofNullable(tickets).orElseGet(Collections::emptyList).stream().map(this::map).collect(Collectors.toList());
     }
 
     private TicketDto map(Ticket ticket) {
