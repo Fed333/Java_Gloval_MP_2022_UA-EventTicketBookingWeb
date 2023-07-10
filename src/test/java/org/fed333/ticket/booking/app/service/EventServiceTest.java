@@ -1,6 +1,10 @@
 package org.fed333.ticket.booking.app.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fed333.ticket.booking.app.exception.AlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.MissingIdValidationException;
+import org.fed333.ticket.booking.app.exception.event.EventAlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.event.EventMissingIdValidationException;
 import org.fed333.ticket.booking.app.model.entity.Event;
 import org.fed333.ticket.booking.app.repository.EventRepository;
 import org.fed333.ticket.booking.app.service.component.SaveEntityValidator;
@@ -22,6 +26,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.fed333.ticket.booking.app.utils.DateUtils.parseDate;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,7 +38,7 @@ public class EventServiceTest {
     private EventRepository mockedRepository;
 
     @Mock
-    private SaveEntityValidator<Event,Long> eventValidator;
+    private SaveEntityValidator<Event,Long> mockedValidator;
 
     @InjectMocks
     private EventService eventService;
@@ -46,7 +51,7 @@ public class EventServiceTest {
 
     @Before
     public void setUp() {
-        eventService.setSaveEventValidator(eventValidator);
+        eventService.setSaveEventValidator(mockedValidator);
         testEvent = Event.builder()
                 .id(1L)
                 .title("test event")
@@ -96,7 +101,16 @@ public class EventServiceTest {
     public void createEvent_shouldInvokeValidator() {
         eventService.createEvent(testEvent);
 
-        verify(eventValidator).validateCreate(testEvent);
+        verify(mockedValidator).validateCreate(testEvent);
+    }
+
+
+    @Test(expected = EventAlreadyExistsValidationException.class)
+    public void createEvent_shouldWrapAlreadyExistsValidationException() {
+        doThrow(new AlreadyExistsValidationException("User", "10"))
+                .when(mockedValidator).validateCreate(testEvent);
+
+        eventService.createEvent(testEvent);
     }
 
     @Test
@@ -110,7 +124,23 @@ public class EventServiceTest {
     public void updateEvent_shouldInvokeValidator() {
         eventService.updateEvent(testEvent);
 
-        verify(eventValidator).validateUpdate(testEvent);
+        verify(mockedValidator).validateUpdate(testEvent);
+    }
+
+    @Test(expected = EventAlreadyExistsValidationException.class)
+    public void updateEvent_shouldWrapAlreadyExistsValidationException() {
+        doThrow(new AlreadyExistsValidationException("User", "10"))
+                .when(mockedValidator).validateUpdate(testEvent);
+
+        eventService.updateEvent(testEvent);
+    }
+
+    @Test(expected = EventMissingIdValidationException.class)
+    public void updateEvent_shouldWrapMissingIdValidationException() {
+        doThrow(new MissingIdValidationException("User"))
+                .when(mockedValidator).validateUpdate(testEvent);
+
+        eventService.updateEvent(testEvent);
     }
 
     @Test

@@ -1,5 +1,9 @@
 package org.fed333.ticket.booking.app.service;
 
+import org.fed333.ticket.booking.app.exception.AlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.MissingIdValidationException;
+import org.fed333.ticket.booking.app.exception.user.UserAlreadyExistsValidationException;
+import org.fed333.ticket.booking.app.exception.user.UserMissingIdValidationException;
 import org.fed333.ticket.booking.app.model.entity.User;
 import org.fed333.ticket.booking.app.repository.UserAccountRepository;
 import org.fed333.ticket.booking.app.repository.UserRepository;
@@ -109,6 +113,14 @@ public class UserServiceTest {
         verify(mockedRepository).save(testUser);
     }
 
+    @Test(expected = UserAlreadyExistsValidationException.class)
+    public void createUser_shouldWrapAlreadyExistsValidationException() {
+        doThrow(new AlreadyExistsValidationException("User", "10"))
+                .when(mockedValidator).validateCreate(testUser);
+
+        userService.createUser(testUser);
+    }
+
     @Test
     public void updateUser_shouldInvokeValidator() {
         userService.updateUser(testUser);
@@ -121,6 +133,22 @@ public class UserServiceTest {
         userService.updateUser(testUser);
 
         verify(mockedRepository).save(testUser);
+    }
+
+    @Test(expected = UserAlreadyExistsValidationException.class)
+    public void updateUser_shouldWrapAlreadyExistsValidationException() {
+        doThrow(new AlreadyExistsValidationException("User", "10"))
+                .when(mockedValidator).validateUpdate(testUser);
+
+        userService.updateUser(testUser);
+    }
+
+    @Test(expected = UserMissingIdValidationException.class)
+    public void updateUser_shouldWrapMissingIdValidationException() {
+        doThrow(new MissingIdValidationException("User"))
+                .when(mockedValidator).validateUpdate(testUser);
+
+        userService.updateUser(testUser);
     }
 
     @Test
